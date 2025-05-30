@@ -1,0 +1,2161 @@
+<!DOCTYPE html>
+<html lang="es" class="dark"> <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kevin Turkienich | Desarrollador Python & Especialista en Automatización</title>
+    <meta name="description" content="Portfolio profesional de Kevin Turkienich, desarrollador de software especializado en Python/Django, automatización de procesos (RPA) y agentes inteligentes. Creador de Excel-ente y Programación Para Mortales.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <!-- EmailJS -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+
+
+    <style>
+        /* Base - Tomado de tu ejemplo y ajustado */
+        :root {
+            --background: 0 0% 100%;
+            --foreground: 240 10% 3.9%;
+            --card: 0 0% 100%;
+            --card-foreground: 240 10% 3.9%;
+            --popover: 0 0% 100%;
+            --popover-foreground: 240 10% 3.9%;
+            --primary: 142.1 76.2% 36.3%; /* Verde principal */
+            --primary-foreground: 355.7 100% 97.3%;
+            --secondary: 240 4.8% 95.9%;
+            --secondary-foreground: 240 5.9% 10%;
+            --muted: 240 4.8% 95.9%;
+            --muted-foreground: 240 3.8% 46.1%;
+            --accent: 240 4.8% 95.9%;
+            --accent-foreground: 240 5.9% 10%;
+            --destructive: 0 84.2% 60.2%;
+            --destructive-foreground: 0 0% 98%;
+            --border: 240 5.9% 90%;
+            --input: 240 5.9% 90%;
+            --ring: 142.1 76.2% 36.3%; /* Verde para el ring */
+            --radius: 0.5rem;
+        
+            --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+            --font-mono: "Fira Code", monospace;
+        
+            /* Colores específicos para íconos si es necesario */
+            --python-color: #3776ab;
+            --excel-color: #217346;
+            --django-color: #092e20; /* Verde oscuro para Django */
+            --automation-color: #ff6b6b;
+            --terminal-text-color: #4ade80; /* Verde brillante para texto de terminal */
+        }
+        
+        .dark { /* Modo oscuro por defecto */
+            --background: 20 14.3% 4.1%; /* Negro/Gris muy oscuro */
+            --foreground: 0 0% 95%;     /* Blanco/Gris muy claro */
+            --card: 24 9.8% 10%;        /* Gris oscuro para tarjetas */
+            --card-foreground: 0 0% 95%;
+            --popover: 0 0% 9%;
+            --popover-foreground: 0 0% 95%;
+            --primary: 142.1 70.6% 45.3%; /* Verde primario más brillante para dark mode */
+            --primary-foreground: 144.9 80.4% 10%; /* Texto oscuro para botones primarios */
+            --secondary: 240 3.7% 15.9%;
+            --secondary-foreground: 0 0% 98%;
+            --muted: 0 0% 15%;
+            --muted-foreground: 240 5% 64.9%;
+            --accent: 12 6.5% 15.1%;
+            --accent-foreground: 0 0% 98%;
+            --destructive: 0 62.8% 30.6%;
+            --destructive-foreground: 0 85.7% 97.3%;
+            --border: 240 3.7% 15.9%;    /* Bordes oscuros */
+            --input: 240 3.7% 15.9%;
+            --ring: 142.4 71.8% 29.2%;   /* Verde para ring en dark mode */
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: var(--font-sans);
+            background-color: hsl(var(--background));
+            color: hsl(var(--foreground));
+            line-height: 1.6;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        a {
+            color: hsl(var(--primary)); /* Enlaces en verde */
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Layout */
+        .container {
+            width: 100%;
+            max-width: 1100px; /* Un poco más angosto para mejor lectura */
+            margin: 0 auto;
+            padding: 0 1.5rem; /* Un poco más de padding */
+        }
+        
+        .section {
+            padding: 4rem 0; /* Un poco menos de padding vertical */
+        }
+        @media (min-width: 768px) {
+            .section { padding: 5rem 0; }
+        }
+        
+        /* Typography */
+        .section-title {
+            font-size: 2.25rem;
+            font-weight: 700;
+            margin-bottom: 2.5rem;
+            text-align: center; /* Títulos centrados */
+        }
+        @media (min-width: 768px) {
+            .section-title { font-size: 2.75rem; }
+        }
+        
+        .gradient-text {
+            background: linear-gradient(to right, hsl(var(--primary)), hsl(var(--primary) / 0.7)); /* Gradiente de verdes */
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .title-underline { /* Alternativa al underline, o quitar si se prefiere centrado sin línea */
+            display: block;
+            margin: 0.5rem auto 0;
+            width: 80px;
+            height: 0.25rem;
+            background-color: hsl(var(--primary));
+        }
+        
+        .highlight {
+            color: hsl(var(--primary));
+            font-weight: 600;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: var(--radius);
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-size: 1rem;
+        }
+        
+        .btn-icon {
+            margin-left: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            transition: transform 0.2s ease;
+        }
+        
+        .btn:hover .btn-icon {
+            transform: translateX(0.25rem);
+        }
+        
+        .btn-primary {
+            background-color: hsl(var(--primary));
+            color: hsl(var(--primary-foreground));
+        }
+        
+        .btn-primary:hover {
+            background-color: hsl(var(--primary) / 0.8); /* Un poco más de hover */
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid hsl(var(--border));
+            color: hsl(var(--foreground));
+        }
+        
+        .btn-outline:hover {
+            background-color: hsl(var(--accent));
+            color: hsl(var(--accent-foreground));
+            border-color: hsl(var(--accent));
+        }
+                
+        /* Hero Section - Terminal */
+        .hero {
+            min-height: 90vh; /* Un poco menos para asegurar visibilidad de botones */
+            display: flex;
+            flex-direction: column; /* Para centrar y luego poner botones debajo */
+            align-items: center;
+            justify-content: center;
+            padding: 2rem 1rem;
+            position: relative; /* Para el preloader */
+        }
+
+        #preloader-container { /* Contenedor para el preloader */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #000; /* Fondo negro para preloader */
+            color: var(--terminal-text-color); /* Texto verde */
+            font-family: var(--font-mono);
+            padding: 20px;
+            box-sizing: border-box;
+            z-index: 10000;
+            overflow-y: auto;
+            font-size: 0.9em;
+        }
+        #preloader-container p {
+            margin: 2px 0;
+            white-space: pre-wrap;
+        }
+        .preloader-hidden {
+            display: none !important;
+        }
+        
+        .terminal-container {
+            width: 100%;
+            max-width: 56rem; /* Un poco más ancho */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Sombra más pronunciada */
+        }
+        
+        .terminal-header {
+            background-color: hsl(var(--card) / 0.8); /* Ligeramente translúcido */
+            border: 1px solid hsl(var(--border));
+            border-bottom: none;
+            border-top-left-radius: var(--radius);
+            border-top-right-radius: var(--radius);
+            padding: 0.75rem 1rem; /* Un poco más de padding */
+            display: flex;
+            align-items: center;
+        }
+        
+        .terminal-icon { /* Lucide icon */
+            width: 1.25rem;
+            height: 1.25rem;
+            color: hsl(var(--primary));
+            margin-right: 0.75rem;
+        }
+        
+        .terminal-title {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            color: hsl(var(--muted-foreground));
+        }
+        
+        .terminal-body {
+            background-color: #0D1117; /* GitHub dark BG */
+            border: 1px solid hsl(var(--border));
+            border-bottom-left-radius: var(--radius);
+            border-bottom-right-radius: var(--radius);
+            padding: 1.5rem;
+            font-family: var(--font-mono);
+            font-size: 0.9rem; /* Un poco más grande */
+            min-height: 350px; /* Más altura */
+            height: auto; /* Permitir que crezca */
+            max-height: 60vh; /* Límite para que no sea demasiado grande */
+            overflow-y: auto;
+            color: var(--terminal-text-color); /* Texto verde brillante */
+        }
+        
+        .terminal-content { /* Contenedor de líneas */
+             /* El color lo hereda de .terminal-body */
+        }
+        
+        .terminal-line {
+            margin-bottom: 0.5rem;
+            word-break: break-all; /* Para evitar desbordamientos de texto largo */
+        }
+        
+        .terminal-prompt {
+            color: hsl(var(--primary)); /* Prompt en verde primario */
+            margin-right: 0.5rem;
+        }
+        
+        .terminal-command { /* Estilo para el comando tecleado */
+            color: hsl(0, 0%, 80%); /* Un gris claro para el comando */
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 0.6rem; /* Un poco más ancho */
+            height: 1.1em; /* Un poco más alto */
+            background-color: var(--terminal-text-color); /* Cursor verde */
+            animation: blink 1s step-end infinite;
+            vertical-align: text-bottom;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .terminal-buttons {
+            margin-top: 2.5rem; /* Más espacio */
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: opacity 0.5s ease 0.2s, transform 0.5s ease 0.2s; /* Delay en la transición */
+        }
+        
+        .terminal-buttons.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        @media (min-width: 640px) {
+            .terminal-buttons {
+                flex-direction: row;
+                justify-content: center;
+            }
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2.5rem; /* Más espacio */
+            align-items: center; /* Alinear items verticalmente */
+        }
+        
+        .about-text p {
+            margin-bottom: 1.25rem; /* Más espacio entre párrafos */
+            font-size: 1.1rem; /* Texto un poco más grande */
+            color: hsl(var(--muted-foreground));
+        }
+        .about-text p:last-child {
+            margin-bottom: 0;
+        }
+        
+        .skills-card-about { /* Renombrado para evitar conflicto con otra sección de skills */
+            background-color: hsl(var(--card)); /* Usar --card para consistencia */
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 2rem; /* Más padding */
+        }
+        
+        .skills-title-about {
+            font-size: 1.5rem; /* Título más grande */
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            color: hsl(var(--foreground));
+        }
+        
+        .status-dot {
+            display: inline-block;
+            width: 0.75rem;
+            height: 0.75rem;
+            background-color: hsl(var(--primary)); /* Verde primario */
+            border-radius: 50%;
+            margin-right: 0.75rem; /* Más espacio */
+        }
+        
+        .skills-list-about {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.75rem; /* Más espacio */
+            color: hsl(var(--muted-foreground));
+        }
+         .skills-list-about li {
+            display: flex;
+            align-items: center;
+         }
+        
+        .skill-bullet { /* Lucide icon */
+            color: hsl(var(--primary));
+            margin-right: 0.75rem; /* Más espacio */
+            width: 1em;
+            height: 1em;
+        }
+        
+        @media (min-width: 768px) {
+            .about-grid {
+                grid-template-columns: 2fr 1fr; /* Dar más espacio al texto */
+            }
+        
+            .skills-list-about {
+                grid-template-columns: 1fr; /* Mantener una columna para mejor lectura de skills */
+            }
+        }
+
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem; /* Más espacio */
+        }
+          .project-card {
+            position: relative;
+            overflow: visible; /* Cambiar de hidden a visible para que no corte el texto */
+            border-radius: var(--radius);
+            border: 1px solid hsl(var(--border));
+            background-color: hsl(var(--card));
+            padding: 1.5rem;
+            transition: all 0.3s;
+            display: flex; /* Para control interno */
+            flex-direction: column; /* Para que los links queden abajo */
+            min-height: 300px; /* Cambiar height: 100% por min-height para permitir crecimiento */
+        }
+        
+        .project-card:hover {
+            border-color: hsl(var(--primary) / 0.5);
+            box-shadow: 0 10px 20px -5px hsl(var(--primary) / 0.15); /* Sombra un poco más sutil */
+            transform: translateY(-5px);
+        }
+        
+        .project-card::before { /* Barra de acento superior */
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0.25rem;
+            background: hsl(var(--primary)); /* Color sólido en vez de gradiente */
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease-out; /* Transición más suave */
+        }
+        
+        .project-card:hover::before {
+            transform: scaleX(1);
+        }
+          .project-header { /* Contenedor de ícono y título/descripción */
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-grow: 1; /* Para empujar tags y links abajo */
+            align-items: flex-start; /* Alinear al inicio para que el texto largo se vea bien */
+        }
+        
+        .project-icon-wrapper {
+            padding: 0.75rem; /* Un poco más de padding */
+            background-color: hsl(var(--primary) / 0.1); /* Fondo con opacidad del primario */
+            border-radius: var(--radius);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0; /* Para que no se encoja */
+            width: 60px; /* Tamaño fijo */
+            height: 60px;
+        }
+        
+        .project-icon { /* Lucide icon */
+            width: 2.5rem;
+            height: 2.5rem;
+            color: hsl(var(--primary)); /* Icono en color primario */
+        }
+        
+        .project-title {
+            font-size: 1.35rem; /* Más grande */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: hsl(var(--foreground));
+        }
+          .project-description {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.95rem; /* Un poco más grande */
+            line-height: 1.6; /* Mejor espaciado entre líneas */
+            margin-bottom: 1rem;
+            flex-grow: 1; /* Asegura que la descripción ocupe espacio */
+        }
+        
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .project-tag {
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+            border-radius: 9999px;
+            padding: 0.35rem 0.85rem; /* Un poco más de padding */
+            font-size: 0.7rem; /* Más pequeño */
+            font-weight: 600; /* Más bold */
+            text-transform: uppercase; /* Mayúsculas */
+        }
+        
+        .project-links {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: auto; /* Empuja los links al final de la tarjeta */
+        }
+        
+        .project-link { /* Estilo para botones de links de proyecto */
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: hsl(var(--muted));
+            border: 1px solid hsl(var(--border));
+            color: hsl(var(--muted-foreground));
+            border-radius: var(--radius);
+            padding: 0.6rem 1rem; /* Ajuste de padding */
+            font-size: 0.875rem;
+            font-weight: 500;
+            transition: all 0.2s;
+        }
+        
+        .project-link:hover {
+            background-color: hsl(var(--primary) / 0.1);
+            color: hsl(var(--primary));
+            border-color: hsl(var(--primary) / 0.3);
+        }
+        
+        .project-link-icon { /* Lucide icon */
+            width: 1rem;
+            height: 1rem;
+        }
+          @media (min-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.5rem; /* Más espacio en tablets */
+            }
+        }
+        @media (min-width: 1024px) {
+            .projects-grid {
+                grid-template-columns: 1fr 1fr; /* Mantener 2 columnas en lugar de 3 para más espacio */
+                gap: 3rem; /* Más espacio en desktop */
+            }
+        }
+        
+        /* Skills Section (Stack Tecnológico) */
+        .skills-grid { /* Para el grid principal de categorías de skills */
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+        
+        .skill-group {
+            background-color: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 2rem; /* Más padding */
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .skill-group.show { /* Para animación con IntersectionObserver */
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .skill-group-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem; /* Más espacio */
+            margin-bottom: 1.5rem; /* Más espacio */
+        }
+        
+        .skill-group-icon { /* Lucide icon */
+            width: 2rem; /* Icono más grande */
+            height: 2rem;
+            color: hsl(var(--primary));
+        }
+        
+        .skill-group-title {
+            font-size: 1.5rem; /* Título más grande */
+            font-weight: 700;
+            color: hsl(var(--foreground));
+        }
+        
+        .skill-items { /* Contenedor de los items individuales con barra */
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem; /* Más espacio */
+        }
+        
+        .skill-item-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem; /* Más espacio */
+            align-items: center;
+        }
+        
+        .skill-name {
+            font-weight: 500;
+            color: hsl(var(--muted-foreground));
+            font-size: 1rem;
+        }
+        
+        .skill-level { /* Porcentaje */
+            color: hsl(var(--primary));
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .skill-bar-bg {
+            height: 0.75rem; /* Barra más gruesa */
+            background-color: hsl(var(--muted));
+            border-radius: var(--radius); /* Usar --radius */
+            overflow: hidden;
+        }
+        
+        .skill-bar {
+            height: 100%;
+            background-color: hsl(var(--primary));
+            border-radius: var(--radius); /* Usar --radius */
+            width: 0; /* Se anima con JS */
+            transition: width 1s ease-in-out 0.2s; /* Delay en la animación */
+        }
+        
+        @media (min-width: 768px) {
+            .skills-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+        /* No es necesario 3 columnas para skills, 2 es suficiente */
+
+        /* Experience Section (Timeline) */
+        .timeline-container {
+            position: relative;
+            padding: 2rem 0;
+            max-width: 800px; /* Limitar ancho para mejor lectura */
+            margin: 0 auto; /* Centrar */
+        }
+        
+        .timeline-line { /* Línea vertical central */
+            position: absolute;
+            left: 1.25rem; /* Posición a la izquierda para diseño de una columna */
+            top: 0;
+            bottom: 0;
+            width: 0.2rem; /* Línea más gruesa */
+            background-color: hsl(var(--primary) / 0.3);
+        }
+        
+        .timeline { /* Contenedor de items */
+            display: flex;
+            flex-direction: column;
+            gap: 2.5rem; /* Más espacio */
+        }
+        
+        .timeline-item {
+            position: relative;
+            background-color: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.75rem; /* Más padding */
+            padding-left: 3.5rem; /* Espacio para el punto y línea */
+            box-shadow: 0 4px 12px -1px hsl(var(--primary) / 0.08); /* Sombra sutil */
+            opacity: 0;
+            transform: translateY(1rem);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .timeline-item.show { /* Para animación */
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .timeline-dot { /* Círculo en la línea */
+            position: absolute;
+            left: 0.75rem; /* Alineado con la línea */
+            top: 2.25rem; /* Ajustar verticalmente */
+            width: 1rem;
+            height: 1rem;
+            background-color: hsl(var(--primary));
+            border: 0.25rem solid hsl(var(--background)); /* Borde del color de fondo */
+            border-radius: 50%;
+        }
+        
+        .timeline-role h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: hsl(var(--foreground)); /* Título en color principal del texto */
+            font-size: 1.25rem; /* Un poco más grande */
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+        
+        .timeline-role-icon { /* Lucide icon */
+            width: 1.1rem;
+            height: 1.1rem;
+            color: hsl(var(--primary));
+        }
+        
+        .timeline-company {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem; /* Más espacio */
+            color: hsl(var(--muted-foreground));
+        }
+        
+        .timeline-company-icon { /* Lucide icon */
+            width: 1rem;
+            height: 1rem;
+        }
+        
+        .timeline-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1.5rem; /* Más espacio horizontal */
+            margin-bottom: 1.25rem; /* Más espacio */
+            font-size: 0.875rem;
+            color: hsl(var(--muted-foreground));
+        }
+        
+        .timeline-meta-item {
+            display: flex;
+            align-items: center;
+            gap: 0.35rem; /* Más espacio */
+        }
+        
+        .timeline-meta-icon { /* Lucide icon */
+            width: 0.85rem; /* Un poco más grande */
+            height: 0.85rem;
+        }
+        
+        .timeline-description {
+            margin-bottom: 1.25rem; /* Más espacio */
+            color: hsl(var(--muted-foreground));
+            font-size: 0.95rem;
+        }
+        
+        .timeline-description-item {
+            display: flex;
+            gap: 0.75rem; /* Más espacio */
+            margin-bottom: 0.5rem;
+            line-height: 1.5;
+        }
+        
+        .timeline-description-bullet {
+            color: hsl(var(--primary));
+            margin-top: 0.25em; /* Alinear con el texto */
+        }
+        
+        .timeline-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        
+        .timeline-tag { /* Mismo estilo que project-tag */
+            background-color: hsl(var(--secondary));
+            color: hsl(var(--secondary-foreground));
+            border-radius: 9999px;
+            padding: 0.35rem 0.85rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 3rem; /* Más espacio */
+        }
+        
+        .contact-info .contact-title { /* No es h3, sino un div con texto */
+            font-size: 1.75rem; /* Más grande */
+            font-weight: 700;
+            margin-bottom: 1.25rem; /* Más espacio */
+            color: hsl(var(--foreground));
+        }
+        
+        .contact-description {
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 2rem; /* Más espacio */
+            font-size: 1.05rem;
+        }
+        
+        .contact-buttons {
+            display: flex;
+            flex-direction: column; /* Apilados por defecto */
+            gap: 1.25rem; /* Más espacio */
+            margin-bottom: 2rem; /* Más espacio */
+        }
+        
+        .contact-button { /* Botones para mostrar email/teléfono */
+            display: inline-flex; /* Para que no ocupe todo el ancho */
+            align-items: center;
+            gap: 0.75rem;
+            background: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            color: hsl(var(--foreground));
+            cursor: pointer;
+            padding: 0.75rem 1.25rem;
+            font-size: 1rem;
+            transition: all 0.2s;
+            border-radius: var(--radius);
+            text-align: left;
+        }
+        
+        .contact-button:hover {
+            background-color: hsl(var(--accent));
+            color: hsl(var(--accent-foreground));
+            border-color: hsl(var(--accent));
+        }
+          .contact-icon { /* Lucide icon */
+            width: 1.25rem;
+            height: 1.25rem;
+            color: hsl(var(--primary)); /* Icono en verde */
+        }
+        
+        .contact-info .social-links { /* Para la subsección de redes sociales */
+            border-top: 1px solid hsl(var(--border));
+            margin-top: 2rem; /* Más espacio */
+            padding-top: 2rem; /* Más espacio */
+        }
+        
+        .contact-info .social-title {
+            font-weight: 600; /* Más bold */
+            margin-bottom: 1.25rem; /* Más espacio */
+            font-size: 1.1rem;
+            color: hsl(var(--foreground));
+        }
+        
+        .contact-info .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.25rem; /* Más espacio */
+        }
+        
+        .contact-info .social-icon a { /* El 'a' es el que lleva el estilo */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 3rem; /* Más grande */
+            height: 3rem; /* Más grande */
+            background-color: hsl(var(--muted));
+            border-radius: 50%; /* Círculo */
+            transition: background-color 0.2s, transform 0.2s;
+            color: hsl(var(--muted-foreground)); /* Color del ícono */
+        }
+        
+        .contact-info .social-icon a:hover {
+            background-color: hsl(var(--primary) / 0.1);
+            transform: scale(1.1);
+        }
+        
+        .contact-info .social-icon a .icon { /* Lucide icon */
+            width: 1.5rem; /* Icono más grande */
+            height: 1.5rem;
+            color: hsl(var(--primary)); /* Icono en verde */
+        }
+        
+        .card { /* Para el formulario de contacto */
+            background-color: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            overflow: hidden; /* Para que el header no se salga */
+        }
+        
+        .card-header {
+            padding: 1.5rem 1.5rem 1rem; /* Ajuste de padding */
+            border-bottom: 1px solid hsl(var(--border)); /* Línea divisoria */
+        }
+        
+        .card-title {
+            font-size: 1.35rem; /* Más grande */
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: hsl(var(--foreground));
+        }
+        
+        .card-description {
+            color: hsl(var(--muted-foreground));
+            font-size: 0.95rem;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem; /* Más espacio */
+        }
+        
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+        
+        .form-label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: hsl(var(--muted-foreground));
+        }
+        
+        .form-input,
+        .form-textarea {
+            width: 100%;
+            padding: 0.85rem 1rem; /* Más padding */
+            background-color: hsl(var(--background)); /* Fondo igual al body */
+            border: 1px solid hsl(var(--input));
+            border-radius: var(--radius);
+            color: hsl(var(--foreground));
+            font-family: var(--font-sans);
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s; /* Añadir transición de box-shadow */
+        }
+        
+        .form-input:focus,
+        .form-textarea:focus {
+            outline: none;
+            border-color: hsl(var(--ring));
+            box-shadow: 0 0 0 3px hsl(var(--ring) / 0.2); /* Sombra de foco más pronunciada */
+        }
+        
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px; /* Más alto */
+        }
+        
+        @media (min-width: 768px) {
+            .contact-grid {
+                grid-template-columns: 1fr 1.25fr; /* Dar más espacio al formulario */
+            }
+        
+            .contact-buttons { /* Botones de email/teléfono en fila */
+                flex-direction: row;
+                gap: 1rem;
+            }
+             .contact-button {
+                flex-grow: 1; /* Para que ocupen el espacio disponible */
+             }
+        }
+        
+        /* Footer */
+        .footer {
+            padding: 2.5rem 0; /* Más padding */
+            border-top: 1px solid hsl(var(--border));
+            background-color: hsl(var(--card)); /* Fondo de tarjeta para el footer */
+        }
+        
+        .footer-content {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem; /* Más espacio */
+        }
+        
+        .copyright {
+            text-align: center;
+            font-size: 0.9rem;
+            color: hsl(var(--muted-foreground));
+        }
+        
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap; /* Para que se ajusten en mobile */
+            justify-content: center; /* Centrar en mobile */
+            gap: 1rem 1.5rem; /* Espacio vertical y horizontal */
+        }
+        
+        .footer-link {
+            transition: color 0.2s;
+            color: hsl(var(--muted-foreground));
+            font-size: 0.9rem;
+        }
+        
+        .footer-link:hover {
+            color: hsl(var(--primary));
+        }
+        
+        @media (min-width: 768px) {
+            .footer-content {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+        
+            .copyright {
+                text-align: left;
+            }
+        }
+        
+        /* Modal (para contacto) */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: hsla(var(--background) / 0.6); /* Fondo con opacidad */
+            backdrop-filter: blur(5px); /* Efecto blur */
+            z-index: 100;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem; /* Para que no pegue a los bordes en mobile */
+        }
+        
+        .modal.show {
+            display: flex;
+        }
+        
+        .modal-content {
+            background-color: hsl(var(--card)); /* Usar --card */
+            border-radius: var(--radius);
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 25px -5px hsl(var(--primary) / 0.15); /* Sombra más pronunciada */
+            animation: modal-in 0.3s ease-out; /* Animación de entrada */
+            border: 1px solid hsl(var(--border));
+        }
+        
+        @keyframes modal-in {
+            from { opacity: 0; transform: translateY(20px) scale(0.95); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .modal-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1.25rem 1.5rem; /* Más padding */
+            border-bottom: 1px solid hsl(var(--border));
+        }
+         .modal-header h3 { /* Título del modal */
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: hsl(var(--foreground));
+         }
+        
+        .modal-close {
+            background: none;
+            border: none;
+            font-size: 1.75rem; /* Botón de cierre más grande */
+            cursor: pointer;
+            color: hsl(var(--muted-foreground));
+            transition: color 0.2s;
+            line-height: 1; /* Para mejor alineación */
+        }
+        
+        .modal-close:hover {
+            color: hsl(var(--foreground));
+        }
+        
+        .modal-body {
+            padding: 1.5rem;
+            font-size: 1rem;
+            color: hsl(var(--muted-foreground));
+        }
+        .modal-body p { margin-bottom: 0.75rem; }
+        .modal-body p:last-child { margin-bottom: 0; }
+
+        /* Loading spinner para botón de formulario */
+        .loading-spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid hsla(var(--primary-foreground) / 0.3); /* Borde más claro */
+            border-radius: 50%;
+            border-top-color: hsl(var(--primary-foreground)); /* Color principal del texto del botón */
+            animation: spin 1s ease-in-out infinite;
+            margin-right: 8px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Utilidades de animación (para Intersection Observer) */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-in-up.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        /* Theme Toggle - Mantener el que tenías */
+        .theme-toggle {
+            position: fixed;
+            top: 1.5rem; /* Un poco más abajo */
+            right: 1.5rem;
+            z-index: 50;
+        }
+        
+        .theme-toggle button {
+            background-color: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            width: 3rem; /* Más grande */
+            height: 3rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            position: relative;
+            color: hsl(var(--foreground)); /* Color del icono */
+        }
+        
+        .icon-sun,
+        .icon-moon { /* Lucide icons */
+            position: absolute;
+            width: 1.5rem; /* Iconos más grandes */
+            height: 1.5rem;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        
+        /* Clase 'light' se aplicará a <html> para modo claro */
+        html.light .icon-sun { opacity: 1; transform: rotate(0) scale(1); }
+        html.light .icon-moon { opacity: 0; transform: rotate(90deg) scale(0); }
+        
+        html.dark .icon-sun { opacity: 0; transform: rotate(-90deg) scale(0); }
+        html.dark .icon-moon { opacity: 1; transform: rotate(0) scale(1); }
+
+        /* Scroll Progress Bar */
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 0.25rem;
+            background-color: hsl(var(--primary));
+            z-index: 100; /* Encima de todo menos modales quizás */
+            width: 0;
+            transition: width 0.05s ease-out; /* Transición más rápida */
+        }
+
+        #skills .skills-grid { /* Grid principal de categorías de skills */
+            display: grid;
+            grid-template-columns: 1fr; /* Por defecto una columna */
+            gap: 2rem;
+        }
+
+        @media (min-width: 768px) {
+            #skills .skills-grid {
+                grid-template-columns: 1fr 1fr; /* Dos columnas en tablets y más grandes */
+            }
+        }
+        /* Opcional: 3 columnas en pantallas muy grandes si tienes muchas categorías
+        @media (min-width: 1200px) {
+            #skills .skills-grid {
+                grid-template-columns: 1fr 1fr 1fr;
+            }
+        }
+        */
+
+        #skills .skill-group {
+            background-color: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 1.5rem; /* Un poco menos de padding vertical */
+            opacity: 0;
+            transform: translateY(20px); /* Ajusta para animación */
+            transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+        }
+
+        #skills .skill-group.is-visible { /* Clase para animación con Intersection Observer */
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #skills .skill-group-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem; /* Espacio entre título del grupo y logos */
+        }
+
+        #skills .skill-group-icon { /* Lucide icon para la categoría */
+            width: 1.75rem; 
+            height: 1.75rem;
+            color: hsl(var(--primary));
+        }
+
+        #skills .skill-group-title {
+            font-size: 1.35rem; /* Tamaño del título de la categoría */
+            font-weight: 700;
+            color: hsl(var(--foreground));
+        }
+
+        #skills .skill-logo-grid { /* Nuevo: Grid para los logos dentro de cada grupo */
+            display: grid;
+            /* Ajusta las columnas según cuántos logos quieras por fila y su tamaño */
+            grid-template-columns: repeat(auto-fill, minmax(60px, 1fr)); 
+            gap: 1.5rem; /* Espacio entre logos */
+            align-items: center;
+            justify-items: center; /* Centra los logos en sus celdas */
+        }        #skills .skill-logo-item { /* Nuevo: Estilo para cada logo individual */
+            display: flex;
+            flex-direction: column; /* Para poner el nombre debajo si se quisiera */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            transition: transform 0.2s ease-out;
+            cursor: pointer; /* Indicar que es clicable */
+            padding: 0.5rem; /* Área de click más grande */
+            border-radius: var(--radius); /* Bordes redondeados */
+            position: relative; /* Para el tooltip */
+        }
+
+        #skills .skill-logo-item:hover {
+            transform: scale(1.1); /* Efecto hover sutil */
+            background-color: hsl(var(--accent) / 0.5); /* Fondo en hover */
+        }
+
+        #skills .skill-logo-item:active {
+            transform: scale(1.05); /* Efecto al hacer click */
+        }
+
+        #skills .skill-logo-item svg, 
+        #skills .skill-logo-item img { /* Para SVGs o imágenes de logos */
+            width: 48px;  /* Tamaño del logo SVG/IMG */
+            height: 48px;
+            object-fit: contain; /* Asegura que el logo no se deforme */
+            fill: hsl(var(--muted-foreground)); /* Color por defecto para SVGs, si son inline y usan currentColor */
+        }
+
+        /* Si quieres que los SVGs de los logos hereden el color de acento o sean blancos: */
+        #skills .skill-logo-item svg.logo-colored {
+            fill: hsl(var(--primary)); /* O un color específico */
+        }
+        #skills .skill-logo-item svg.logo-white {
+            fill: hsl(var(--foreground)); /* Para logos que deban ser blancos en tema oscuro */
+        }
+
+/* ... tus estilos existentes para #skills ... */
+
+        #skills .skill-logo-item {
+            position: relative; /* Necesario para posicionar el tooltip de forma absoluta */
+            /* tus estilos existentes para .skill-logo-item */
+        }        #skills .skill-tooltip {
+            position: absolute;
+            bottom: 115%; /* Posiciona el tooltip encima del logo, ajusta según necesites */
+            left: 50%;
+            transform: translateX(-50%) translateY(10px); /* Posición inicial para animación y centrado */
+            background-color: hsl(var(--card)); /* Fondo del tooltip */
+            color: hsl(var(--card-foreground)); /* Texto del tooltip */
+            border: 1px solid hsl(var(--border));
+            padding: 0.6rem 0.8rem; /* Espaciado interno */
+            border-radius: var(--radius);
+            font-size: 0.8rem; /* Tamaño de fuente del tooltip */
+            line-height: 1.4;
+            text-align: left;
+            white-space: normal; /* Permite que el texto se divida en múltiples líneas */
+            width: max-content; /* El ancho se ajusta al contenido */
+            max-width: 220px; /* Ancho máximo para que no sea demasiado grande */
+            box-shadow: 0 5px 15px rgba(0,0,0,0.15); /* Sombra sutil */
+            z-index: 20; /* Asegura que esté por encima de otros elementos */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.25s ease-out, transform 0.25s ease-out, visibility 0.25s;
+            pointer-events: none; /* Para que no interfiera con el cursor si se superpone un poco */
+        }
+
+        #skills .skill-logo-item:hover .skill-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0); /* Mueve a su posición final */
+        }
+
+        /* Estilo para el nombre de la herramienta dentro del tooltip */
+        #skills .skill-tooltip strong {
+            display: block;
+            font-weight: 600;
+            color: hsl(var(--primary)); /* Resalta el nombre de la herramienta */
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+        }
+
+        /* Flecha opcional para el tooltip */
+        #skills .skill-tooltip::after {
+            content: "";
+            position: absolute;
+            top: 100%; /* Se posiciona en la parte inferior del tooltip */
+            left: 50%;
+            margin-left: -6px; /* Centra la flecha */
+            border-width: 6px;
+            border-style: solid;
+            border-color: hsl(var(--card)) transparent transparent transparent; /* El color superior es el fondo del tooltip */
+        }
+
+        /* Añadir un pequeño indicador visual de que es clicable */
+        #skills .skill-logo-item::before {
+            content: "📱"; /* Emoji de click, puedes cambiarlo por un icono */
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            font-size: 0.7rem;
+            opacity: 0;
+            transition: opacity 0.2s ease;
+            pointer-events: none;
+        }
+
+        #skills .skill-logo-item:hover::before {
+            opacity: 0.7;
+        }
+
+        /* Texto adicional para indicar que es clicable */
+        #skills .skill-tooltip::before {
+            content: "Click para más detalles";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 0.65rem;
+            color: hsl(var(--muted-foreground));
+            font-style: italic;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body class="dark"> <div id="preloader-container">
+        </div>
+
+    <div class="scroll-progress"></div>
+
+    <div class="theme-toggle">
+        <button id="theme-toggle-btn" aria-label="Toggle theme">
+            <i data-lucide="sun" class="icon-sun"></i>
+            <i data-lucide="moon" class="icon-moon"></i>
+        </button>
+    </div>
+
+    <section class="hero" id="hero">
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <i data-lucide="terminal" class="terminal-icon"></i>
+                <span class="terminal-title">kevinturkienich.com - bash</span>
+            </div>
+            <div class="terminal-body">
+                <div id="terminal-content" class="terminal-content">
+                    </div>
+                <span id="terminal-cursor" class="terminal-cursor"></span>
+            </div>
+            <div class="terminal-buttons" id="terminal-buttons">
+                <button class="btn btn-primary" id="projects-btn-hero">
+                    Ver Proyectos
+                    <i data-lucide="arrow-right" class="btn-icon"></i>
+                </button>
+                <button class="btn btn-outline" id="contact-btn-hero">
+                    Contactar
+                    <i data-lucide="mail" class="btn-icon"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">Sobre Mí</span>
+                <span class="title-underline"></span>
+            </h2>
+            <div class="about-grid">
+                <div class="about-text">
+                    <p>
+                        ¡Hola! Soy Kevin Turkienich, un <span class="highlight">Desarrollador de Software y Especialista en Automatización de Procesos</span> radicado en Buenos Aires, Argentina. Mi pasión es tender puentes entre las necesidades del negocio y las soluciones tecnológicas innovadoras.
+                    </p>
+                    <p>
+                        Tengo más de 5 años de experiencia práctica en el área de la automatización y mejoras de procesos, he evolucionado desde la automatización con VBA en Excel hasta liderar equipos en el desarrollo de arquitecturas de <span class="highlight">microservicios, APIs y la implementación de agentes de IA</span> con Python y Django.
+                    </p>
+                    <p>
+                        Soy una persona muy curiosa, como digo en mi proyecto <a href="http://calculadoraderecetas.com.ar" target="_blank" rel="noopener noreferrer">CalculadoraDeRecetas.com.ar</a>. Disfruto simplificando lo complejo y compartiendo conocimiento a través de iniciativas como mi canal <a href="https://www.youtube.com/@excel-ente" target="_blank" rel="noopener noreferrer">Excel-ente</a> y la plataforma <span class="highlight">ProgramacionParaMortales.com</span>. Mi meta es siempre generar un impacto tangible, ya sea optimizando la eficiencia empresarial o empoderando a otros con herramientas y educación gratuita.
+                    </p>
+                </div>
+                <div class="skills-card-about">
+                    <h3 class="skills-title-about">
+                        <span class="status-dot"></span>
+                        Competencias Destacadas
+                    </h3>
+                    <ul class="skills-list-about">
+                        <li><i data-lucide="chevron-right" class="skill-bullet"></i>Desarrollo Full-Stack (Python, Django)</li>
+                        <li><i data-lucide="chevron-right" class="skill-bullet"></i>Automatización de Procesos (RPA, VBA)</li>
+                        <li><i data-lucide="chevron-right" class="skill-bullet"></i>Inteligencia Artificial y Agentes Autónomos</li>
+                        <li><i data-lucide="chevron-right" class="skill-bullet"></i>Arquitectura de Microservicios y APIs</li>
+                        <li><i data-lucide="chevron-right" class="skill-bullet"></i>Liderazgo de Equipos Técnicos</li>
+                        <li><i data-lucide="chevron-right" class="skill-bullet"></i>Creación de Contenido Educativo</li>
+                        <li><i data-lucide="chevron-right" class="skill-bullet"></i>Análisis y Optimización de Procesos de Negocio</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="projects" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">Proyectos e Iniciativas</span>
+                <span class="title-underline"></span>
+            </h2>
+            <div class="projects-grid" id="projects-grid-content">
+                </div>
+        </div>
+    </section>
+
+    <section id="skills" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">Stack Tecnológico</span>
+                <span class="title-underline"></span>
+            </h2>
+            <div class="skills-grid" id="skills-grid-content">
+                </div>
+        </div>
+    </section>
+
+    <section id="experience" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">Trayectoria Profesional</span>
+                <span class="title-underline"></span>
+            </h2>
+            <div class="timeline-container">
+                <div class="timeline-line"></div>
+                <div class="timeline" id="experience-timeline-content">
+                    </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="ambition" class="section" style="background-color: hsl(var(--card));">
+        <div class="container" style="text-align: center;">
+            <h2 class="section-title">
+                <span class="gradient-text">Impacto y Futuro</span>
+                <span class="title-underline"></span>
+            </h2>
+            <p style="font-size: 1.15rem; max-width: 800px; margin: 0 auto 2rem auto; color: hsl(var(--muted-foreground));">
+                Busco constantemente proyectos desafiantes donde la tecnología pueda ser un motor de cambio y optimización. Mi foco está en la <span class="highlight">Inteligencia Artificial aplicada, la automatización inteligente</span> y la creación de herramientas que potencien la capacidad humana.
+                Si compartes esta visión o tienes una idea innovadora, <span class="highlight">¡me encantaría conectar!</span>
+            </p>
+            <button class="btn btn-primary btn-lg" onclick="document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });" style="padding: 1rem 2rem; font-size: 1.1rem;">
+                Hablemos de tu Proyecto
+                <i data-lucide="message-circle" class="btn-icon"></i>
+            </button>
+        </div>
+    </section>
+
+    <section id="contact" class="section">
+        <div class="container">
+            <h2 class="section-title">
+                <span class="gradient-text">Contacto</span>
+                <span class="title-underline"></span>
+            </h2>
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 class="contact-title">¿Interesado en Colaborar?</h3>
+                    <p class="contact-description">
+                        Estoy abierto a oportunidades de desarrollo, consultoría en automatización y proyectos que busquen generar un impacto significativo. Si tienes alguna pregunta o propuesta, no dudes en contactarme.
+                    </p>
+                    
+                    <div class="contact-buttons">
+                        <button id="show-email-btn" class="contact-button">
+                            <i data-lucide="mail" class="contact-icon"></i>
+                            <span>Mostrar Email</span>
+                        </button>
+                        
+                        <button id="show-phone-btn" class="contact-button">
+                             <i data-lucide="phone" class="contact-icon"></i>
+                            <span>Mostrar Teléfono</span>
+                        </button>
+                    </div>
+                    
+                    <div class="social-links">
+                        <h4 class="social-title">También puedes encontrarme en:</h4>
+                        <div class="social-icons">
+                            <span class="social-icon"><a href="https://www.linkedin.com/in/kevinturkienich/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin" class="icon"></i></a></span>
+                            <span class="social-icon"><a href="https://github.com/Excel-ente" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github" class="icon"></i></a></span>
+                            <span class="social-icon"><a href="https://www.youtube.com/@excel-ente" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i data-lucide="youtube" class="icon"></i></a></span>
+                            <span class="social-icon"><a href="https://www.instagram.com/excel.entes" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i data-lucide="instagram" class="icon"></i></a></span>
+                            <span class="social-icon"><a href="https://www.tiktok.com/@excel.entes" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i data-lucide="smartphone" class="icon"></i></a></span> </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form-container">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Envíame un Mensaje Directo</h3>
+                            <p class="card-description">Completa el formulario y te responderé a la brevedad.</p>
+                        </div>
+                        <div class="card-content">
+                            <form id="contact-form" class="contact-form">                                <div class="form-group">
+                                    <label for="from_name" class="form-label">Nombre Completo</label>
+                                    <input type="text" id="from_name" name="from_name" class="form-input" placeholder="Tu nombre y apellido" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="from_email" class="form-label">Email de Contacto</label>
+                                    <input type="email" id="from_email" name="from_email" class="form-input" placeholder="tu.email@ejemplo.com" required>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="message" class="form-label">Tu Mensaje</label>
+                                    <textarea id="message" name="message" class="form-textarea" placeholder="¿En qué puedo ayudarte o qué proyecto tienes en mente?" rows="6" required></textarea>
+                                </div>
+                                
+                                <!-- <button type="submit" class="btn btn-primary btn-full" style="width:100%;">
+                                    Enviar Mensaje
+                                    <i data-lucide="send" class="btn-icon"></i>
+                                </button> -->
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <p class="copyright">© <span id="current-year"></span> Kevin Turkienich. Todos los derechos reservados.</p>
+                <div class="footer-links">
+                    <a href="#hero" class="footer-link">Inicio</a>
+                    <a href="#about" class="footer-link">Sobre Mí</a>
+                    <a href="#projects" class="footer-link">Proyectos</a>
+                    <a href="#contact" class="footer-link">Contacto</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="contact-modal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Información de Contacto</h3>
+                <button id="modal-close" class="modal-close" aria-label="Cerrar modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-text"></p>
+            </div>
+        </div>
+    </div>
+    <script>
+
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize Lucide icons
+        lucide.createIcons();
+        
+        // Set current year in footer
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        
+        // --- PRELOADER ---
+        const preloaderContainer = document.getElementById('preloader-container');
+        const heroSection = document.getElementById('hero');
+        heroSection.style.opacity = 0; // Ocultar hero mientras carga
+
+        const bootMessages = [
+            "KATOS v4.2.0 booting...",
+            "Mounting /dev/profile (kevinturkienich.com)",
+            "Kernel: 6.KT.2025- x86_64",
+            "[INFO] RAM check: 16GB OK",
+            "[ OK ] Python Interpreter v3.11.5 loaded.",
+            "[ OK ] Django Environment v4.2 activated.",
+            "[INFO] Loading AI/ML Modules (PyTorch, LangGraph, LangChain, Ollama)... this might take a sec, son bastantes gigas de 'inteligencia'",
+            "[ OK ] Neural Networks ready (y con ganas de un cafecito).",
+            "[INFO] Initializing RPA daemons (Robocorp, Selenium, OCR)...",
+            "[ OK ] Automation protocols active.",
+            "[ OK ] Excel-ente Core Services started.",
+            "[INFO] Loading Lucide Icons...",
+            "[INFO] Calibrando el mate...",
+            "[ OK ] Profile ready. (Uff, ¡al fin!)",
+            "System Online. ¡Bienvenido al Portfolio de Kevin Turkienich!"
+        ];
+        let bootMsgIdx = 0;
+        function showBootMessage() {
+            if (bootMsgIdx < bootMessages.length) {
+                const p = document.createElement('p');
+                p.textContent = bootMessages[bootMsgIdx];
+                preloaderContainer.appendChild(p);
+                preloaderContainer.scrollTop = preloaderContainer.scrollHeight;
+                bootMsgIdx++;
+                setTimeout(showBootMessage, Math.random() * 100 + 30); // Ajusta velocidad
+            } else {
+                setTimeout(() => {
+                    preloaderContainer.classList.add('preloader-hidden');
+                    heroSection.style.transition = 'opacity 0.5s ease-in';
+                    heroSection.style.opacity = 1;
+                    initTerminalAnimation(); 
+                }, 500); // Pequeña pausa antes de mostrar
+            }
+        }
+        showBootMessage();
+
+        // Theme toggle
+        const themeToggleBtn = document.getElementById('theme-toggle-btn');
+        const htmlElement = document.documentElement;
+        const bodyElement = document.body;
+        
+        function applyTheme(theme) {
+            htmlElement.classList.remove('dark', 'light');
+            htmlElement.classList.add(theme);
+            bodyElement.classList.remove('dark', 'light');
+            bodyElement.classList.add(theme);
+            localStorage.setItem('theme', theme);
+
+            const sunIcon = themeToggleBtn.querySelector('.icon-sun');
+            const moonIcon = themeToggleBtn.querySelector('.icon-moon');
+            if (theme === 'dark') {
+                if (sunIcon) sunIcon.style.opacity = '0';
+                if (moonIcon) moonIcon.style.opacity = '1';
+            } else {
+                if (sunIcon) sunIcon.style.opacity = '1';
+                if (moonIcon) moonIcon.style.opacity = '0';
+            }
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            const newTheme = htmlElement.classList.contains('dark') ? 'light' : 'dark';
+            applyTheme(newTheme);
+        });
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) {
+            applyTheme(savedTheme);
+        } else {
+            applyTheme('dark'); // Default to DARK
+        }
+        
+        // Terminal animation in Hero
+        const terminalContent = document.getElementById('terminal-content');
+        const terminalButtons = document.getElementById('terminal-buttons');
+        const terminalCursor = document.getElementById('terminal-cursor');
+        
+        const terminalLines = [
+            { text: "Boot sequence complete.", isCommand: false, delayAfter: 200 },
+            { text: "", isCommand: true, prompt: "", delayAfter: 200 },
+            { text: "Kevin Turkienich", isCommand: false, color: "hsl(var(--primary))", delayAfter: 100},
+            { text: "  Profesión: Desarrollador Python | Especialista en Automatización | Educador Tecnológico", isCommand: false, delayAfter: 100 },
+            { text: "  Ubicación: Buenos Aires, Argentina", isCommand: false, delayAfter: 100},
+            { text: "  Misión   : Resolver problemas y generar impacto con tecnología accesible.", isCommand: false, delayAfter: 100 },
+            { text: "  Estado   : Online y listo para nuevos desafíos.", isCommand: false, color: "var(--terminal-text-color)", delayAfter: 300}
+        ];
+        
+        let currentTerminalLineIdx = 0;
+        let currentTextCharIdx = 0;
+        
+        function typeTerminalChar() {
+            if (currentTerminalLineIdx >= terminalLines.length) {
+                terminalCursor.style.animation = 'blink 1s step-end infinite';
+                terminalButtons.classList.add('show');
+                return;
+            }
+        
+            const lineObj = terminalLines[currentTerminalLineIdx];
+            const lineText = lineObj.text;
+        
+            if (currentTextCharIdx < lineText.length) {
+                const currentLineDiv = terminalContent.lastElementChild;
+                if (lineObj.isCommand && currentTextCharIdx === 0) { 
+                    currentLineDiv.querySelector('.terminal-command-text').textContent += lineText.charAt(currentTextCharIdx);
+                } else if (!lineObj.isCommand) {
+                    currentLineDiv.textContent += lineText.charAt(currentTextCharIdx);
+                }
+                currentTextCharIdx++;
+                terminalContent.scrollTop = terminalContent.scrollHeight;
+                setTimeout(typeTerminalChar, 10); // Typing speed
+            } else {
+                currentTerminalLineIdx++;
+                currentTextCharIdx = 0;
+                setTimeout(initNextTerminalLine, lineObj.delayAfter || 80);
+            }
+        }
+        
+        function initNextTerminalLine() {
+            if (currentTerminalLineIdx >= terminalLines.length) {
+                typeTerminalChar();
+                return;
+            }
+            const lineObj = terminalLines[currentTerminalLineIdx];
+            const newLineDiv = document.createElement('div');
+            newLineDiv.className = 'terminal-line';
+        
+            if (lineObj.isCommand) {
+                const promptSpan = document.createElement('span');
+                promptSpan.className = 'terminal-prompt';
+                promptSpan.textContent = lineObj.prompt;
+                newLineDiv.appendChild(promptSpan);
+                const commandTextSpan = document.createElement('span');
+                commandTextSpan.className = 'terminal-command-text'; // Para el texto del comando en sí
+                newLineDiv.appendChild(commandTextSpan); // Se llenará en typeTerminalChar
+            } else if (lineObj.color) {
+                newLineDiv.style.color = lineObj.color;
+            }
+            
+            terminalContent.appendChild(newLineDiv);
+            terminalContent.scrollTop = terminalContent.scrollHeight;
+            typeTerminalChar();
+        }
+
+        function initTerminalAnimation() {
+            terminalContent.innerHTML = ''; 
+            terminalCursor.style.animation = 'none'; 
+            terminalCursor.style.opacity = 1;
+            initNextTerminalLine();
+        }
+        
+        // Scroll to sections from hero buttons
+        document.getElementById('projects-btn-hero').addEventListener('click', function() {
+            document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        document.getElementById('contact-btn-hero').addEventListener('click', function() {
+            document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+        });
+        
+        // Projects data (ACTUALIZADO Y ORDENADO)
+        const projectsData = [            {
+                title: "CalculadoradeRecetas.com.ar",
+                description: "Herramienta web 100% gratuita para simplificar el costeo de recetas a emprendedores gastronómicos. Permite calcular márgenes y precios de venta de forma intuitiva y precisa.",
+                icon: "calculator",
+                tags: ["Python", "Django", "Web App", "Finanzas", "Gratuito", "Emprendedores"],
+                links: [ { label: "Visitar Web", url: "http://calculadoraderecetas.com.ar", icon: "external-link" } ]
+            },
+            {
+                title: "Programación Para Mortales",
+                description: "Plataforma educativa gratuita dedicada a enseñar programación de manera amigable y sin tecnicismos. Ofrece un libro digital interactivo, futuros cursos y recursos para hacer el desarrollo de software accesible para todos.",
+                icon: "book-open-text",
+                tags: ["Educación", "Programación", "Python", "Gratuito", "Comunidad", "Libro Digital"],
+                links: [ { label: "Visitar Plataforma", url: "https://programacionparamortales.com", icon: "external-link" } ] // Asume que esta es la URL
+            },
+            {
+                title: "Excel-ente.com",
+                description: "Mi marca y plataforma principal donde convergen herramientas, tutoriales y recursos gratuitos (Excel, VBA, Python, IA) enfocados en potenciar a emprendedores y profesionales. Cuna de SFI y el canal de YouTube.",
+                icon: "layout-dashboard", // O 'atom'
+                tags: ["Plataforma", "Excel", "Python", "IA", "Tutoriales", "Gratuito", "Emprendimiento"],
+                links: [ { label: "Canal Principal (YouTube)", url: "https://www.youtube.com/@excel-ente", icon: "youtube" } ] // Enlazar a la web si existe, o al canal
+            },
+            {
+                title: "SFI (Sistema Facturación e Inventarios)",
+                description: "Solución integral y gratuita en Excel + VBA para la gestión de inventario, facturación, clientes y compras. Ampliamente adoptada por emprendedores por su simplicidad y potencia.",
+                icon: "file-spreadsheet",
+                tags: ["Excel", "VBA", "Gestión PyME", "Gratuito"],
+                links: [ { label: "Más Info / Descarga", url: "https://excel-ente.com/sfi-sistema-de-facturacion-e-inventarios-version-definitiva", icon: "download-cloud" } ] // URL de ejemplo
+            },
+            {
+                title: "Babot - Agente IA (PyPI)",
+                description: "Proyecto open-source (Python) para automatización de tareas administrativas mediante el uso de Agentes IA usando Ollama Localmente. Publicado en PyPI",
+                icon: "bot",
+                tags: ["Python", "IA", "Automatización", "PyPI", "Open Source"],
+
+                links: [
+                    { label: "PyPI", url: "https://pypi.org/project/babot/", icon: "package" },
+                    { label: "GitHub", url: "https://github.com/Excel-ente/babot", icon: "github" }
+                ]
+            },
+            
+            {
+                title: "Canal YouTube 'Excel-ente'", // Puede ser redundante si Excel-ente.com lo engloba, o un destaque específico.
+                description: "Plataforma con +10k suscriptores donde comparto tutoriales detallados y prácticos sobre Excel, VBA, Python y herramientas de automatización para negocios.",
+                icon: "youtube",
+                tags: ["YouTube", "Tutoriales", "Excel", "Python", "Comunidad"],
+                links: [ { label: "Ver Canal", url: "https://www.youtube.com/@excel-ente", icon: "youtube" } ]
+            },
+        ];
+        
+        const projectsGrid = document.getElementById('projects-grid-content');
+        projectsData.forEach(project => {
+            const projectCard = document.createElement('div');
+            projectCard.className = 'project-card fade-in-up';
+            
+            let tagsHTML = project.tags.map(tag => `<span class="project-tag">${tag}</span>`).join('');
+            let linksHTML = project.links.map(link => `
+                <a href="${link.url}" target="_blank" rel="noopener noreferrer" class="project-link">
+                    <i data-lucide="${link.icon}" class="project-link-icon"></i>
+                    ${link.label}
+                </a>`).join('');
+            
+            projectCard.innerHTML = `
+                <div class="project-header">
+                    <div class="project-icon-wrapper">
+                        <i data-lucide="${project.icon}" class="project-icon"></i>
+                    </div>
+                    <div>
+                        <h3 class="project-title">${project.title}</h3>
+                        <p class="project-description">${project.description}</p>
+                    </div>
+                </div>
+                <div class="project-tags">${tagsHTML}</div>
+                <div class="project-links">${linksHTML}</div>
+            `;
+            projectsGrid.appendChild(projectCard);
+        });
+        
+        // Skills data (sin cambios respecto a la versión anterior, ya era completa)
+      // Skills data (NUEVA ESTRUCTURA SOLO CON LOGOS)
+// Skills data (NUEVA ESTRUCTURA SOLO CON LOGOS)
+        const skillsData = [
+            {
+                category: "Lenguajes & Frameworks Backend",
+                icon: "server-cog",
+                logos: [
+                    { name: "Python", type: "fab", fa_icon: "python", color: "#3776AB", usage: "Lenguaje principal para desarrollo backend, scripting, IA y análisis de datos. Usado en la mayoría de mis proyectos." },
+                    { name: "Django", type: "fab", fa_icon: "django", color: "#092E20", usage: "Framework principal para construir aplicaciones web robustas y escalables como CalculadoraDeRecetas y DictaPilar." },
+                    { name: "FastAPI", lucide_icon: "zap", color: "#009688", usage: "Para crear APIs de alto rendimiento, especialmente en microservicios y proyectos de IA." },
+                ]
+            },
+            {
+                category: "Inteligencia Artificial & Agentes",
+                icon: "brain-circuit",
+                logos: [
+                    { name: "LangGraph", lucide_icon: "git-fork" , color: "#FF6F00", usage: "Construcción de agentes de IA stateful y aplicaciones LLM complejas con ciclos y lógica condicional." },
+                    { name: "PyTorch", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg", alt: "PyTorch", usage: "Entrenamiento y despliegue de modelos de Deep Learning, aunque mi foco actual es más en la aplicación de LLMs." },
+                    { name: "TensorFlow", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/tensorflow/tensorflow-original.svg", alt: "TensorFlow", usage: "Experiencia en el ecosistema TensorFlow para modelos de Machine Learning." },
+                    { name: "Ollama", lucide_icon: "message-circle-code", color: "#2F80ED", usage: "Ejecución local de LLMs (ej. Llama3, Mistral) para proyectos que requieren privacidad o funcionamiento offline, como en DictaPilar." },
+                    { name: "CrewAI", lucide_icon: "users-round", color: "#4A90E2", usage: "Orquestación de equipos de agentes de IA autónomos para tareas colaborativas y complejas." },
+                ]
+            },
+            // ... (Continúa añadiendo 'usage' para el resto de tus skills en otras categorías)
+            {
+                category: "Automatización (RPA & Scripting)",
+                icon: "repeat",
+                logos: [
+                    { name: "Robocorp", lucide_icon: "robot" , color: "#00A9E0", usage: "Desarrollo de robots de software open-source en Python para automatización de procesos de negocio (RPA de 2ª gen)." },
+                    { name: "Selenium", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/selenium/selenium-original.svg", alt: "Selenium", usage: "Automatización de navegadores web para web scraping y testing de aplicaciones." },
+                    { name: "VBA", type: "fab", fa_icon: "microsoft", color: "#217346", usage: "Automatización de tareas y desarrollo de sistemas en Excel (ej. SFI Excel-ente), mi puerta de entrada a la programación." },
+                    { name: "Bash", lucide_icon: "terminal-square", color: "#4EAA25", usage: "Scripting en entornos Linux para automatización de tareas de servidor y despliegues." },
+                ]
+            },
+            // ... (Y así sucesivamente para las demás categorías y logos)
+            {
+                category: "Bases de Datos & Frontend Básico",
+                icon: "database-zap",
+                logos: [
+                    { name: "PostgreSQL", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/postgresql/postgresql-original.svg", alt: "PostgreSQL", usage:"Base de datos relacional principal para mis aplicaciones Django, por su robustez y escalabilidad."},
+                    { name: "HTML5", type: "fab", fa_icon: "html5", color: "#E34F26", usage:"Estructura semántica para todas mis aplicaciones web y sitios, incluyendo este portfolio."},
+                    { name: "CSS3", type: "fab", fa_icon: "css3-alt", color: "#1572B6", usage:"Estilización y diseño responsive de interfaces web, aplicando metodologías modernas."},
+                    { name: "JavaScript", type: "fab", fa_icon: "js-square", color: "#F7DF1E", usage:"Interactividad en el frontend, manipulación del DOM y lógica cliente para una mejor UX."},
+                ]
+            },
+            {
+                category: "DevOps & Cloud",
+                icon: "cloud-cog",
+                logos: [
+                    { name: "Linux", type: "fab", fa_icon: "linux", color: "#FCC624", usage:"Sistema operativo principal para servidores y entornos de desarrollo/producción."},
+                    { name: "Docker", type: "fab", fa_icon: "docker", color: "#2496ED", usage:"Contenerización de aplicaciones para asegurar consistencia entre entornos y facilitar despliegues."},
+                    { name: "AWS", type: "fab", fa_icon: "aws", color: "#FF9900", usage:"Servicios cloud para despliegue y gestión de infraestructura (EC2, S3, RDS)."},
+                    { name: "DigitalOcean", type: "fab", fa_icon: "digital-ocean", color: "#0080FF", usage:"Alternativa cloud para VPS y despliegues ágiles de aplicaciones."},
+                    { name: "Cloudflare", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/cloudflare/cloudflare-original.svg", alt: "Cloudflare", usage:"CDN, seguridad (WAF, Anti-DDoS) y optimización de rendimiento para sitios web."},
+                    { name: "Nginx", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg", alt: "Nginx", usage:"Servidor web y proxy inverso para gestionar tráfico, servir contenido estático y balanceo de carga."},
+                ]
+            }
+        ];        const skillsGridContainer = document.getElementById('skills-grid-content');
+        if (skillsGridContainer) { // Verificar que el contenedor exista
+            skillsData.forEach(skillGroup => {
+                const groupEl = document.createElement('div');
+                groupEl.className = 'skill-group fade-in-up'; 
+
+                let logosHTML = skillGroup.logos.map(logo => {
+                    let logoElement = '';
+                    if (logo.type === "fab" || logo.type === "fas") { // Font Awesome
+                        logoElement = `<i class="${logo.type} fa-${logo.fa_icon}" style="font-size: 48px; color: ${logo.color || 'hsl(var(--foreground))'};"></i>`;
+                    } else if (logo.lucide_icon) { // Lucide Icon
+                        // Lucide iconos se crean después con lucide.createIcons()
+                        // Aquí solo preparamos el tag con el color si se especifica.
+                        const styleAttribute = logo.color ? `style="color: ${logo.color}; stroke-width: 2;"` : 'style="stroke-width: 2;"'; // stroke-width:2 es default de lucide
+                        logoElement = `<i data-lucide="${logo.lucide_icon}" ${styleAttribute}></i>`;
+                    } else if (logo.type === "custom_svg_url") { // Custom SVG from URL
+                         logoElement = `<img src="${logo.url}" alt="${logo.name}" style="width: 48px; height: 48px;">`;
+                    }
+                    
+                    // Crear elemento con tooltip/modal y evento de click
+                    return `
+                        <div class="skill-logo-item" data-skill='${JSON.stringify(logo)}' onclick="showSkillModal(this)"> 
+                            ${logoElement}
+                            <span class="skill-tooltip">
+                                <strong>${logo.name}</strong>
+                                ${logo.usage || 'Descripción pendiente...'}
+                            </span>
+                        </div>`;
+                }).join('');
+
+                groupEl.innerHTML = `
+                    <div class="skill-group-header">
+                        <i data-lucide="${skillGroup.icon}" class="skill-group-icon"></i>
+                        <h3 class="skill-group-title">${skillGroup.category}</h3>
+                    </div>
+                    <div class="skill-logo-grid">
+                        ${logosHTML}
+                    </div>
+                `;
+                skillsGridContainer.appendChild(groupEl);
+            });
+        }
+        // Experience data (ACTUALIZADA Y COMPLETA)
+       const experiencesData = [
+            {
+                role: "Coordinador de Automatización de Procesos y Mejora Continua",
+                company: "Municipalidad de Pilar",
+                period: "Jul 2023 - Presente",
+                location: "Pilar, Buenos Aires, Argentina",
+                description: [
+                    "Liderazgo de equipo técnico multidisciplinario (+7 desarrolladores y analistas) en la estrategia y ejecución de proyectos de automatización y transformación digital.",
+                    "Diseño e implementación de una arquitectura de microservicios y APIs internas (Python, Django, FastAPI) para optimizar flujos de trabajo críticos e interconectar sistemas legados y nuevos.",
+                    "Desarrollo e integración de 'DictaPilar', una aplicación de Inteligencia Artificial (Django y modelos LLM con Ollama) para el análisis, clasificación y generación de previsualizaciones automáticas de dictámenes legales, reduciendo significativamente tiempos de revisión y errores humanos.",
+                    "Implementación de agentes inteligentes (CrewAI, LangGraph) para la gestión predictiva y automatizada de procesos administrativos complejos, mejorando la asignación de recursos y la capacidad de respuesta."
+                ],
+                tags: ["Liderazgo de Equipos", "Python", "Django", "FastAPI", "RPA", "IA", "Agentes Autónomos", "Microservicios", "APIs", "Transformación Digital"]
+            },
+            {
+                role: "Analista Técnico SSR (RPA y BI)",
+                company: "Swiss Medical Group",
+                period: "Jul 2022 - Jun 2023",
+                location: "Buenos Aires, Argentina",
+                description: [
+                    "Optimización y mantenimiento avanzado de procesos robotizados (RPA) utilizando UiPath y Power Automate, logrando una reducción comprobada de errores operativos del 75%.",
+                    "Creación y automatización de reportes financieros y de gestión en Power BI, proporcionando insights clave para la toma de decisiones estratégicas a nivel gerencial."
+                ],
+                tags: ["RPA", "UiPath", "Power Automate", "Power BI", "Automatización", "Análisis de Datos"]
+            },
+            { // Esta fue tu primera experiencia técnica formal según mencionaste
+                role: "Consultor Semi-Senior en Tax Technology (Analista Funcional RPA)",
+                company: "KPMG Argentina",
+                period: "Nov 2021 - Jul 2022", // Tu CV dice marzo 2022 - julio 2022 para KPMG, pero el PDF dice Nov 2021. Ajustaré al PDF que es más reciente.
+                location: "Buenos Aires, Argentina",
+                description: [
+                    "Mi primera incursión formal en el mundo técnico. Actué como Analista Funcional RPA, traduciendo las necesidades del cliente del área de impuestos al equipo de desarrollo.",
+                    "Participación en el relevamiento de procesos (As-Is), diseño de soluciones futuras (To-Be) y detección de oportunidades de mejora y automatización.",
+                    "Documentación de procesos y colaboración en el diseño e implementación de templates en Excel con macros (VBA) para optimizar tareas previas a la robotización."
+                ],
+                tags: ["RPA", "Análisis Funcional", "Consultoría", "VBA", "Optimización de Procesos", "TaxTech"]
+            },
+            { // Experiencia en Chandon, enfocada en el despertar de la pasión tecnológica
+                role: "Analista Impositivo SSr (Outsourced en Chandon S.A.)",
+                company: "Grant Thornton Argentina (asignado a Chandon S.A.)",
+                period: "Mar 2020 - Mar 2021", // Tu CV dice marzo 2020 - marzo 2021
+                location: "Luján de Cuyo, Mendoza (asignación) / Buenos Aires",
+                description: [
+                    "Responsable de tareas administrativas y de cumplimiento en el área de impuestos para Chandon S.A.",
+                    "Durante este rol, comencé a identificar ineficiencias en los procesos manuales y la gran dependencia de tareas repetitivas en hojas de cálculo.",
+                    "Fue aquí donde mi curiosidad por la optimización de procesos mediante la tecnología se encendió, llevándome a explorar intensivamente Excel avanzado y las macros (VBA) como primeras herramientas para automatizar y mejorar los flujos de trabajo de oficina."
+                ],
+                tags: ["Experiencia en Oficina", "Procesos Administrativos", "Análisis de Datos (inicial)", "VBA (despertar interés)"]
+            },
+            { // Experiencia en Walmart, enfocada en el despertar de la pasión tecnológica
+                role: "Analista Impositivo Jr (Outsourced en Walmart Argentina)",
+                company: "PGK Consultores (asignado a Walmart Argentina)",
+                period: "Ago 2018 - Mar 2020",
+                location: "Buenos Aires, Argentina",
+                description: [
+                    "Desempeño de tareas administrativas y de soporte en el departamento de impuestos de Walmart Argentina.",
+                    "Este fue uno de mis primeros contactos con el entorno corporativo, donde observé de primera mano la complejidad de los sistemas de gestión y la oportunidad de aplicar tecnología para simplificar tareas.",
+                    "Aquí se sembró la semilla de mi interés por la programación, al buscar maneras más eficientes de manejar grandes volúmenes de información y diseñar templates en Excel que agilizaran el trabajo diario del equipo."
+                ],
+                tags: ["Experiencia en Oficina", "Soporte Administrativo", "Excel (interés inicial)", "Procesos de Negocio"]
+            },
+           
+        ];
+        // Ordenar experiencia por fecha de inicio descendente (más reciente primero)
+        experiencesData.sort((a, b) => {
+            const dateA = new Date(a.period.split(' - ')[1] === 'Presente' ? '9999-12-31' : a.period.split(' - ')[1].split(' ').reverse().join('-').replace('ene','Jan').replace('feb','Feb').replace('mar','Mar').replace('abr','Apr').replace('may','May').replace('jun','Jun').replace('jul','Jul').replace('ago','Aug').replace('sep','Sep').replace('oct','Oct').replace('nov','Nov').replace('dic','Dec'));
+            const dateB = new Date(b.period.split(' - ')[1] === 'Presente' ? '9999-12-31' : b.period.split(' - ')[1].split(' ').reverse().join('-').replace('ene','Jan').replace('feb','Feb').replace('mar','Mar').replace('abr','Apr').replace('may','May').replace('jun','Jun').replace('jul','Jul').replace('ago','Aug').replace('sep','Sep').replace('oct','Oct').replace('nov','Nov').replace('dic','Dec'));
+            return dateB - dateA;
+        });
+
+
+        const experienceTimeline = document.getElementById('experience-timeline-content');
+        experiencesData.forEach(exp => {
+            const itemEl = document.createElement('div');
+            itemEl.className = 'timeline-item fade-in-up'; 
+            
+            let descHTML = exp.description.map(d => `<div class="timeline-description-item"><span class="timeline-description-bullet"><i data-lucide="arrow-right-circle" style="width:1em; height:1em;"></i></span><span>${d}</span></div>`).join('');
+            let tagsHTML = exp.tags.map(tag => `<span class="timeline-tag">${tag}</span>`).join('');
+
+            itemEl.innerHTML = `
+                <div class="timeline-dot"></div>
+                <div class="timeline-role">
+                    <i data-lucide="briefcase" class="timeline-role-icon"></i>
+                    <h3>${exp.role}</h3>
+                </div>
+                <div class="timeline-company">
+                    <i data-lucide="building-2" class="timeline-company-icon"></i>
+                    <span>${exp.company}</span>
+                </div>
+                <div class="timeline-meta">
+                    <div class="timeline-meta-item">
+                        <i data-lucide="calendar-days" class="timeline-meta-icon"></i>
+                        <span>${exp.period}</span>
+                    </div>
+                    <div class="timeline-meta-item">
+                        <i data-lucide="map-pin" class="timeline-meta-icon"></i>
+                        <span>${exp.location}</span>
+                    </div>
+                </div>
+                <div class="timeline-description">${descHTML}</div>
+                <div class="timeline-tags">${tagsHTML}</div>
+            `;
+            experienceTimeline.appendChild(itemEl);
+        });
+        
+        // Initialize Lucide icons again for dynamically added content
+        lucide.createIcons();
+        
+        // Scroll progress bar
+        const scrollProgress = document.querySelector('.scroll-progress');
+        window.addEventListener('scroll', () => {
+            const totalHeight = document.body.scrollHeight - window.innerHeight;
+            const progress = (window.scrollY / totalHeight) * 100;
+            scrollProgress.style.width = `${progress}%`;
+        });
+        
+        // Intersection Observer for animations (fade-in-up and skill bars)
+        const animatedElements = document.querySelectorAll('.fade-in-up');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    
+                    if (entry.target.classList.contains('skill-group')) {
+                        const skillBars = entry.target.querySelectorAll('.skill-bar');
+                        skillBars.forEach((bar, index) => {
+                            setTimeout(() => { 
+                                const level = bar.getAttribute('data-level');
+                                bar.style.width = `${level}%`;
+                            }, 100 + (index * 50));
+                        });
+                    }
+                    // observer.unobserve(entry.target); // Descomentar si solo se anima una vez
+                }
+            });
+        }, { threshold: 0.05 }); // Umbral más bajo para que se active antes
+
+        animatedElements.forEach(el => observer.observe(el));
+        document.querySelectorAll('.skill-group').forEach(el => observer.observe(el)); // Asegurar que skill-groups también se observen
+          // Contact form submission with EmailJS
+        const contactForm = document.getElementById('contact-form');
+        if (contactForm) {
+            // Initialize EmailJS (reemplaza con tus IDs reales)
+            emailjs.init("#"); // Obtener de https://dashboard.emailjs.com/admin/account
+            
+            contactForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+                const submitBtn = contactForm.querySelector('button[type="submit"]');
+                const originalBtnContent = submitBtn.innerHTML;
+                
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `<div class="loading-spinner"></div> Enviando...`;
+                
+                try {
+                    // Envío real con EmailJS
+                    const result = await emailjs.sendForm(
+                        '#',    // Obtener de https://dashboard.emailjs.com/admin
+                        '#',   // Obtener de https://dashboard.emailjs.com/admin
+                        contactForm
+                    );
+                    
+                    console.log('✅ Email enviado:', result);
+                    submitBtn.innerHTML = `<i data-lucide="check-circle" class="btn-icon"></i> ¡Mensaje Enviado!`;
+                    lucide.createIcons(); 
+                    contactForm.reset();
+                    
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalBtnContent;
+                        submitBtn.disabled = false;
+                        lucide.createIcons();
+                    }, 4000);
+                    
+                } catch (error) {
+                    console.error('❌ Error al enviar:', error);
+                    submitBtn.innerHTML = `<i data-lucide="x-circle" class="btn-icon"></i> Error. Intenta nuevamente`;
+                    lucide.createIcons();
+                    
+                    setTimeout(() => {
+                        submitBtn.innerHTML = originalBtnContent;
+                        submitBtn.disabled = false;
+                        lucide.createIcons();
+                    }, 3000);
+                }
+            });
+        }
+
+        // Contact Info Modal
+        const modal = document.getElementById('contact-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        const modalClose = document.getElementById('modal-close');
+
+        function showModal(title, textContentHTML) {
+            modalTitle.textContent = title;
+            modalText.innerHTML = textContentHTML;
+            modal.classList.add('show');
+            lucide.createIcons();
+        }
+
+        if (modalClose) {
+            modalClose.addEventListener('click', () => modal.classList.remove('show'));
+        }
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) modal.classList.remove('show');
+        });
+
+        const showEmailBtn = document.getElementById('show-email-btn');
+        if (showEmailBtn) {
+            showEmailBtn.addEventListener('click', () => {
+                const email = ['kevin_turkienich', '@', 'outlook.com'].join('');
+                showModal('Email de Contacto', `
+                    <p>Puedes escribirme a:</p>
+                    <p style="font-weight: bold; margin-top: 10px; font-family: var(--font-mono); word-break: break-all;">${email}</p>
+                    <p style="margin-top: 15px;">
+                        <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${email}'); this.innerHTML = '<i data-lucide=\\'check\\' style=\\'width:1em;height:1em;margin-right:0.5em;\\'></i>Copiado!'; lucide.createIcons(); setTimeout(() => { this.innerHTML = '<i data-lucide=\\'copy\\' style=\\'width:1em;height:1em;margin-right:0.5em;\\'></i>Copiar Email'; lucide.createIcons(); }, 2000)">
+                            <i data-lucide="copy" style="width:1em; height:1em; margin-right:0.5em;"></i>Copiar Email
+                        </button>
+                    </p>
+                `);
+            });
+        }        const showPhoneBtn = document.getElementById('show-phone-btn');
+        if (showPhoneBtn) {
+            showPhoneBtn.addEventListener('click', () => {
+                const phone = ['+54', '11', '5704', '3076'].join(''); // Sin espacios para copiar fácil
+                const displayPhone = ['+54', ' 11', ' 5704', '-', '3076'].join('');
+                showModal('Teléfono de Contacto', `
+                    <p>Mi número (Argentina) es:</p>
+                    <p style="font-weight: bold; margin-top: 10px; font-family: var(--font-mono);">${displayPhone}</p>
+                    <p style="margin-top: 15px;">
+                    <button class="btn btn-primary" onclick="navigator.clipboard.writeText('${phone}'); this.innerHTML = '<i data-lucide=\\'check\\' style=\\'width:1em;height:1em;margin-right:0.5em;\\'></i>Copiado!'; lucide.createIcons(); setTimeout(() => { this.innerHTML = '<i data-lucide=\\'copy\\' style=\\'width:1em;height:1em;margin-right:0.5em;\\'></i>Copiar Teléfono'; lucide.createIcons(); }, 2000)">
+                            <i data-lucide="copy" style="width:1em; height:1em; margin-right:0.5em;"></i>Copiar Teléfono
+                        </button>
+                    </p>
+                    <p style="font-size:0.8em; margin-top:10px;">Por favor, considera enviar un email o mensaje de LinkedIn/GitHub como primer contacto.</p>
+                `);
+            });
+        }
+    });
+
+    // Función para mostrar modal de skills (fuera del DOMContentLoaded)
+    function showSkillModal(element) {
+        const skillData = JSON.parse(element.dataset.skill);
+        const modal = document.getElementById('contact-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalText = document.getElementById('modal-text');
+        
+        modalTitle.textContent = skillData.name;
+        modalText.innerHTML = `
+            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
+                ${element.innerHTML.split('<span class="skill-tooltip">')[0]}
+                <h4 style="margin: 0; color: hsl(var(--primary));">${skillData.name}</h4>
+            </div>
+            <p style="margin-bottom: 1rem;"><strong>Uso en mis proyectos:</strong></p>
+            <p>${skillData.usage || 'Información detallada próximamente...'}</p>
+        `;
+        modal.classList.add('show');
+        lucide.createIcons();
+    }
+    </script>
+
+</body>
+</html>
