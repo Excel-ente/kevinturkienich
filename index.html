@@ -7,11 +7,10 @@
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    
-    <!-- EmailJS -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
 
     <style>
@@ -407,9 +406,10 @@
             grid-template-columns: 1fr;
             gap: 2rem; /* Más espacio */
         }
-          .project-card {
+        
+        .project-card {
             position: relative;
-            overflow: visible; /* Cambiar de hidden a visible para que no corte el texto */
+            overflow: hidden;
             border-radius: var(--radius);
             border: 1px solid hsl(var(--border));
             background-color: hsl(var(--card));
@@ -417,7 +417,7 @@
             transition: all 0.3s;
             display: flex; /* Para control interno */
             flex-direction: column; /* Para que los links queden abajo */
-            min-height: 300px; /* Cambiar height: 100% por min-height para permitir crecimiento */
+            height: 100%; /* Para que las tarjetas en una fila tengan la misma altura */
         }
         
         .project-card:hover {
@@ -442,12 +442,12 @@
         .project-card:hover::before {
             transform: scaleX(1);
         }
-          .project-header { /* Contenedor de ícono y título/descripción */
+        
+        .project-header { /* Contenedor de ícono y título/descripción */
             display: flex;
             gap: 1rem;
             margin-bottom: 1rem;
             flex-grow: 1; /* Para empujar tags y links abajo */
-            align-items: flex-start; /* Alinear al inicio para que el texto largo se vea bien */
         }
         
         .project-icon-wrapper {
@@ -474,11 +474,11 @@
             margin-bottom: 0.5rem;
             color: hsl(var(--foreground));
         }
-          .project-description {
+        
+        .project-description {
             color: hsl(var(--muted-foreground));
             font-size: 0.95rem; /* Un poco más grande */
-            line-height: 1.6; /* Mejor espaciado entre líneas */
-            margin-bottom: 1rem;
+            margin: 1rem;
             flex-grow: 1; /* Asegura que la descripción ocupe espacio */
         }
         
@@ -529,16 +529,15 @@
             width: 1rem;
             height: 1rem;
         }
-          @media (min-width: 768px) {
+        
+        @media (min-width: 768px) {
             .projects-grid {
                 grid-template-columns: 1fr 1fr;
-                gap: 2.5rem; /* Más espacio en tablets */
             }
         }
         @media (min-width: 1024px) {
             .projects-grid {
-                grid-template-columns: 1fr 1fr; /* Mantener 2 columnas en lugar de 3 para más espacio */
-                gap: 3rem; /* Más espacio en desktop */
+                grid-template-columns: 1fr 1fr 1fr; /* Tres columnas en pantallas grandes */
             }
         }
         
@@ -814,7 +813,12 @@
             color: hsl(var(--accent-foreground));
             border-color: hsl(var(--accent));
         }
-          .contact-icon { /* Lucide icon */
+        
+        .contact-icon-wrapper { /* No es necesario si el ícono está directo en el botón */
+            /* Estilos si se usa un wrapper específico */
+        }
+        
+        .contact-icon { /* Lucide icon */
             width: 1.25rem;
             height: 1.25rem;
             color: hsl(var(--primary)); /* Icono en verde */
@@ -1200,26 +1204,19 @@
             gap: 1.5rem; /* Espacio entre logos */
             align-items: center;
             justify-items: center; /* Centra los logos en sus celdas */
-        }        #skills .skill-logo-item { /* Nuevo: Estilo para cada logo individual */
+        }
+
+        #skills .skill-logo-item { /* Nuevo: Estilo para cada logo individual */
             display: flex;
             flex-direction: column; /* Para poner el nombre debajo si se quisiera */
             align-items: center;
             justify-content: center;
             text-align: center;
             transition: transform 0.2s ease-out;
-            cursor: pointer; /* Indicar que es clicable */
-            padding: 0.5rem; /* Área de click más grande */
-            border-radius: var(--radius); /* Bordes redondeados */
-            position: relative; /* Para el tooltip */
         }
 
         #skills .skill-logo-item:hover {
             transform: scale(1.1); /* Efecto hover sutil */
-            background-color: hsl(var(--accent) / 0.5); /* Fondo en hover */
-        }
-
-        #skills .skill-logo-item:active {
-            transform: scale(1.05); /* Efecto al hacer click */
         }
 
         #skills .skill-logo-item svg, 
@@ -1243,7 +1240,9 @@
         #skills .skill-logo-item {
             position: relative; /* Necesario para posicionar el tooltip de forma absoluta */
             /* tus estilos existentes para .skill-logo-item */
-        }        #skills .skill-tooltip {
+        }
+
+        #skills .skill-tooltip {
             position: absolute;
             bottom: 115%; /* Posiciona el tooltip encima del logo, ajusta según necesites */
             left: 50%;
@@ -1294,33 +1293,10 @@
             border-color: hsl(var(--card)) transparent transparent transparent; /* El color superior es el fondo del tooltip */
         }
 
-        /* Añadir un pequeño indicador visual de que es clicable */
-        #skills .skill-logo-item::before {
-            content: "📱"; /* Emoji de click, puedes cambiarlo por un icono */
-            position: absolute;
-            top: -5px;
-            right: -5px;
-            font-size: 0.7rem;
-            opacity: 0;
-            transition: opacity 0.2s ease;
-            pointer-events: none;
-        }
-
-        #skills .skill-logo-item:hover::before {
-            opacity: 0.7;
-        }
-
-        /* Texto adicional para indicar que es clicable */
-        #skills .skill-tooltip::before {
-            content: "Click para más detalles";
-            position: absolute;
-            bottom: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            font-size: 0.65rem;
-            color: hsl(var(--muted-foreground));
-            font-style: italic;
-            white-space: nowrap;
+        #skills .skill-logo-item.active .skill-tooltip {
+            opacity: 1;
+            visibility: visible;
+            transform: translateX(-50%) translateY(0);
         }
     </style>
 </head>
@@ -1372,10 +1348,10 @@
                         ¡Hola! Soy Kevin Turkienich, un <span class="highlight">Desarrollador de Software y Especialista en Automatización de Procesos</span> radicado en Buenos Aires, Argentina. Mi pasión es tender puentes entre las necesidades del negocio y las soluciones tecnológicas innovadoras.
                     </p>
                     <p>
-                        Tengo más de 5 años de experiencia práctica en el área de la automatización y mejoras de procesos, he evolucionado desde la automatización con VBA en Excel hasta liderar equipos en el desarrollo de arquitecturas de <span class="highlight">microservicios, APIs y la implementación de agentes de IA</span> con Python y Django.
+                        Con formacion en <span class="highlight">Administración de Empresas</span> y más de 5 años de experiencia práctica en el área de la automatización y mejoras de procesos, he evolucionado desde la automatización con VBA en Excel hasta liderar equipos en el desarrollo de arquitecturas de <span class="highlight">microservicios, APIs y la implementación de agentes de IA</span> con Python y Django.
                     </p>
                     <p>
-                        Soy una persona muy curiosa, como digo en mi proyecto <a href="http://calculadoraderecetas.com.ar" target="_blank" rel="noopener noreferrer">CalculadoraDeRecetas.com.ar</a>. Disfruto simplificando lo complejo y compartiendo conocimiento a través de iniciativas como mi canal <a href="https://www.youtube.com/@excel-ente" target="_blank" rel="noopener noreferrer">Excel-ente</a> y la plataforma <span class="highlight">ProgramacionParaMortales.com</span>. Mi meta es siempre generar un impacto tangible, ya sea optimizando la eficiencia empresarial o empoderando a otros con herramientas y educación gratuita.
+                        Me considero un "tipo curioso", como digo en mi proyecto <a href="http://calculadoraderecetas.com.ar" target="_blank" rel="noopener noreferrer">CalculadoraDeRecetas.com.ar</a>. Disfruto simplificando lo complejo y compartiendo conocimiento a través de iniciativas como mi canal <a href="https://www.youtube.com/@excel-ente" target="_blank" rel="noopener noreferrer">Excel-ente</a> y la plataforma <span class="highlight">ProgramacionParaMortales.com</span>. Mi meta es siempre generar un impacto tangible, ya sea optimizando la eficiencia empresarial o empoderando a otros con herramientas y educación gratuita.
                     </p>
                 </div>
                 <div class="skills-card-about">
@@ -1433,7 +1409,7 @@
         </div>
     </section>
     
-    <section id="ambition" class="section" style="background-color: hsl(var(--card));">
+    <!-- <section id="ambition" class="section" style="background-color: hsl(var(--card));">
         <div class="container" style="text-align: center;">
             <h2 class="section-title">
                 <span class="gradient-text">Impacto y Futuro</span>
@@ -1448,7 +1424,7 @@
                 <i data-lucide="message-circle" class="btn-icon"></i>
             </button>
         </div>
-    </section>
+    </section> -->
 
     <section id="contact" class="section">
         <div class="container">
@@ -1493,14 +1469,15 @@
                             <p class="card-description">Completa el formulario y te responderé a la brevedad.</p>
                         </div>
                         <div class="card-content">
-                            <form id="contact-form" class="contact-form">                                <div class="form-group">
-                                    <label for="from_name" class="form-label">Nombre Completo</label>
-                                    <input type="text" id="from_name" name="from_name" class="form-input" placeholder="Tu nombre y apellido" required>
+                            <form id="contact-form" class="contact-form">
+                                <div class="form-group">
+                                    <label for="name" class="form-label">Nombre Completo</label>
+                                    <input type="text" id="name" name="name" class="form-input" placeholder="Tu nombre y apellido" required>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="from_email" class="form-label">Email de Contacto</label>
-                                    <input type="email" id="from_email" name="from_email" class="form-input" placeholder="tu.email@ejemplo.com" required>
+                                    <label for="email" class="form-label">Email de Contacto</label>
+                                    <input type="email" id="email" name="email" class="form-input" placeholder="tu.email@ejemplo.com" required>
                                 </div>
                                 
                                 <div class="form-group">
@@ -1508,10 +1485,10 @@
                                     <textarea id="message" name="message" class="form-textarea" placeholder="¿En qué puedo ayudarte o qué proyecto tienes en mente?" rows="6" required></textarea>
                                 </div>
                                 
-                                <!-- <button type="submit" class="btn btn-primary btn-full" style="width:100%;">
+                                <button type="submit" class="btn btn-primary btn-full" style="width:100%;">
                                     Enviar Mensaje
                                     <i data-lucide="send" class="btn-icon"></i>
-                                </button> -->
+                                </button>
                             </form>
                         </div>
                     </div>
@@ -1545,6 +1522,56 @@
             </div>
         </div>
     </div>
+
+    <script>
+        // ... (dentro de la función que procesa skillsData)
+    const skillsGridContainer = document.getElementById('skills-grid-content');
+    if (skillsGridContainer) {
+        skillsData.forEach(skillGroup => {
+            const groupEl = document.createElement('div');
+            groupEl.className = 'skill-group fade-in-up'; 
+
+            let logosHTML = skillGroup.logos.map(logo => {
+                let logoElement = '';
+                if (logo.type === "fab" || logo.type === "fas") {
+                    logoElement = `<i class="${logo.type} fa-${logo.fa_icon}" style="font-size: 48px; color: ${logo.color || 'hsl(var(--foreground))'};"></i>`;
+                } else if (logo.lucide_icon) {
+                    const styleAttribute = logo.color ? `style="color: ${logo.color}; stroke-width: 2;"` : 'style="stroke-width: 2;"';
+                    logoElement = `<i data-lucide="${logo.lucide_icon}" ${styleAttribute}></i>`;
+                } else if (logo.type === "custom_svg_url") {
+                        logoElement = `<img src="${logo.url}" alt="${logo.name}" style="width: 48px; height: 48px;">`;
+                }
+                
+                // Modificación aquí para añadir el tooltip
+                // El 'title' original se puede quitar o mantener como fallback
+                return `
+                    <div class="skill-logo-item"> 
+                        ${logoElement}
+                        <span class="skill-tooltip">
+                            <strong>${logo.name}</strong>
+                            ${logo.usage || 'Descripción pendiente...'}
+                        </span>
+                    </div>`;
+            }).join('');
+
+            groupEl.innerHTML = `
+                <div class="skill-group-header">
+                    <i data-lucide="${skillGroup.icon}" class="skill-group-icon"></i>
+                    <h3 class="skill-group-title">${skillGroup.category}</h3>
+                </div>
+                <div class="skill-logo-grid">
+                    ${logosHTML}
+                </div>
+            `;
+            skillsGridContainer.appendChild(groupEl);
+        });
+            // ¡Importante! Si Lucide no renderiza los iconos dentro de los tooltips (si decides ponerlos ahí),
+            // o los que se añaden dinámicamente, asegúrate de llamar a lucide.createIcons() DESPUÉS
+            // de que todo el HTML dinámico (incluyendo los tooltips) se haya añadido al DOM.
+            // Ya lo haces al final de DOMContentLoaded, lo que debería cubrir esto para los logos.
+    }
+    // ...
+    </script>
     <script>
 
     document.addEventListener('DOMContentLoaded', function() {
@@ -1638,12 +1665,12 @@
         
         const terminalLines = [
             { text: "Boot sequence complete.", isCommand: false, delayAfter: 200 },
-            { text: "", isCommand: true, prompt: "", delayAfter: 200 },
+            { text: "kev@portfolio:~$ whoami --full", isCommand: true, prompt: "kev@portfolio:~$ ", delayAfter: 400 },
             { text: "Kevin Turkienich", isCommand: false, color: "hsl(var(--primary))", delayAfter: 100},
-            { text: "  Profesión: Desarrollador Python | Especialista en Automatización | Educador Tecnológico", isCommand: false, delayAfter: 100 },
+            { text: "  Profesión: Desarrollador Python | Especialista en Automatización de Procesos", isCommand: false, delayAfter: 100 },
             { text: "  Ubicación: Buenos Aires, Argentina", isCommand: false, delayAfter: 100},
-            { text: "  Misión   : Resolver problemas y generar impacto con tecnología accesible.", isCommand: false, delayAfter: 100 },
-            { text: "  Estado   : Online y listo para nuevos desafíos.", isCommand: false, color: "var(--terminal-text-color)", delayAfter: 300}
+            { text: "  Misión   : Resolver problemas y generar impacto con tecnología accesible para todos.", isCommand: false, delayAfter: 100 },
+            { text: "  Estado   : Online y listo para nuevos desafíos.", isCommand: false, color: "var(--terminal-text-color)", delayAfter: 800}
         ];
         
         let currentTerminalLineIdx = 0;
@@ -1668,7 +1695,7 @@
                 }
                 currentTextCharIdx++;
                 terminalContent.scrollTop = terminalContent.scrollHeight;
-                setTimeout(typeTerminalChar, 10); // Typing speed
+                setTimeout(typeTerminalChar, 35); // Typing speed
             } else {
                 currentTerminalLineIdx++;
                 currentTextCharIdx = 0;
@@ -1719,9 +1746,10 @@
         });
         
         // Projects data (ACTUALIZADO Y ORDENADO)
-        const projectsData = [            {
+        const projectsData = [
+            {
                 title: "CalculadoradeRecetas.com.ar",
-                description: "Herramienta web 100% gratuita para simplificar el costeo de recetas a emprendedores gastronómicos. Permite calcular márgenes y precios de venta de forma intuitiva y precisa.",
+                description: "Herramienta web online (Python/Django) 100% gratuita, diseñada para simplificar el costeo de recetas a emprendedores gastronómicos, permitiendo calcular márgenes y precios de venta de forma intuitiva y precisa.",
                 icon: "calculator",
                 tags: ["Python", "Django", "Web App", "Finanzas", "Gratuito", "Emprendedores"],
                 links: [ { label: "Visitar Web", url: "http://calculadoraderecetas.com.ar", icon: "external-link" } ]
@@ -1741,27 +1769,27 @@
                 links: [ { label: "Canal Principal (YouTube)", url: "https://www.youtube.com/@excel-ente", icon: "youtube" } ] // Enlazar a la web si existe, o al canal
             },
             {
-                title: "SFI (Sistema Facturación e Inventarios)",
-                description: "Solución integral y gratuita en Excel + VBA para la gestión de inventario, facturación, clientes y compras. Ampliamente adoptada por emprendedores por su simplicidad y potencia.",
+                title: "SFI Excel-ente (Sistema Facturación e Inventarios)",
+                description: "Solución integral y gratuita en Excel+VBA para la gestión de inventario, facturación, clientes y compras. Ampliamente adoptada por emprendedores por su simplicidad y potencia.",
                 icon: "file-spreadsheet",
                 tags: ["Excel", "VBA", "Gestión PyME", "Gratuito"],
                 links: [ { label: "Más Info / Descarga", url: "https://excel-ente.com/sfi-sistema-de-facturacion-e-inventarios-version-definitiva", icon: "download-cloud" } ] // URL de ejemplo
             },
             {
                 title: "Babot - Agente IA (PyPI)",
-                description: "Proyecto open-source (Python) para automatización de tareas administrativas mediante el uso de Agentes IA usando Ollama Localmente. Publicado en PyPI",
+                description: "Agente inteligente open-source (Python) para automatización de tareas administrativas y fiscales. Publicado en PyPI con creciente adopción.",
                 icon: "bot",
                 tags: ["Python", "IA", "Automatización", "PyPI", "Open Source"],
 
                 links: [
                     { label: "PyPI", url: "https://pypi.org/project/babot/", icon: "package" },
-                    { label: "GitHub", url: "https://github.com/Excel-ente/babot", icon: "github" }
+                    { label: "GitHub", url: "https://github.com/Excel-ente/babot", icon: "github" } // Asumimos esta URL
                 ]
             },
             
             {
-                title: "Canal YouTube 'Excel-ente'", // Puede ser redundante si Excel-ente.com lo engloba, o un destaque específico.
-                description: "Plataforma con +10k suscriptores donde comparto tutoriales detallados y prácticos sobre Excel, VBA, Python y herramientas de automatización para negocios.",
+                title: "Excel-ente", // Puede ser redundante si Excel-ente.com lo engloba, o un destaque específico.
+                description: "Plataforma con +20k suscriptores donde comparto tutoriales detallados y prácticos sobre Excel, VBA, Python y herramientas de automatización para negocios.",
                 icon: "youtube",
                 tags: ["YouTube", "Tutoriales", "Excel", "Python", "Comunidad"],
                 links: [ { label: "Ver Canal", url: "https://www.youtube.com/@excel-ente", icon: "youtube" } ]
@@ -1815,9 +1843,7 @@
                 logos: [
                     { name: "LangGraph", lucide_icon: "git-fork" , color: "#FF6F00", usage: "Construcción de agentes de IA stateful y aplicaciones LLM complejas con ciclos y lógica condicional." },
                     { name: "PyTorch", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/pytorch/pytorch-original.svg", alt: "PyTorch", usage: "Entrenamiento y despliegue de modelos de Deep Learning, aunque mi foco actual es más en la aplicación de LLMs." },
-                    { name: "TensorFlow", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/tensorflow/tensorflow-original.svg", alt: "TensorFlow", usage: "Experiencia en el ecosistema TensorFlow para modelos de Machine Learning." },
                     { name: "Ollama", lucide_icon: "message-circle-code", color: "#2F80ED", usage: "Ejecución local de LLMs (ej. Llama3, Mistral) para proyectos que requieren privacidad o funcionamiento offline, como en DictaPilar." },
-                    { name: "CrewAI", lucide_icon: "users-round", color: "#4A90E2", usage: "Orquestación de equipos de agentes de IA autónomos para tareas colaborativas y complejas." },
                 ]
             },
             // ... (Continúa añadiendo 'usage' para el resto de tus skills en otras categorías)
@@ -1854,7 +1880,9 @@
                     { name: "Nginx", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg", alt: "Nginx", usage:"Servidor web y proxy inverso para gestionar tráfico, servir contenido estático y balanceo de carga."},
                 ]
             }
-        ];        const skillsGridContainer = document.getElementById('skills-grid-content');
+        ];
+
+        const skillsGridContainer = document.getElementById('skills-grid-content');
         if (skillsGridContainer) { // Verificar que el contenedor exista
             skillsData.forEach(skillGroup => {
                 const groupEl = document.createElement('div');
@@ -1872,16 +1900,9 @@
                     } else if (logo.type === "custom_svg_url") { // Custom SVG from URL
                          logoElement = `<img src="${logo.url}" alt="${logo.name}" style="width: 48px; height: 48px;">`;
                     }
-                    
-                    // Crear elemento con tooltip/modal y evento de click
-                    return `
-                        <div class="skill-logo-item" data-skill='${JSON.stringify(logo)}' onclick="showSkillModal(this)"> 
-                            ${logoElement}
-                            <span class="skill-tooltip">
-                                <strong>${logo.name}</strong>
-                                ${logo.usage || 'Descripción pendiente...'}
-                            </span>
-                        </div>`;
+                    // Si quisieras un nombre debajo (aunque pediste solo logos):
+                    // return `<div class="skill-logo-item">${logoElement}<span>${logo.name}</span></div>`;
+                    return `<div class="skill-logo-item" title="${logo.name}">${logoElement}</div>`; // Añadido title para accesibilidad/tooltip
                 }).join('');
 
                 groupEl.innerHTML = `
@@ -2036,13 +2057,11 @@
 
         animatedElements.forEach(el => observer.observe(el));
         document.querySelectorAll('.skill-group').forEach(el => observer.observe(el)); // Asegurar que skill-groups también se observen
-          // Contact form submission with EmailJS
+        
+        // Contact form submission simulation
         const contactForm = document.getElementById('contact-form');
         if (contactForm) {
-            // Initialize EmailJS (reemplaza con tus IDs reales)
-            emailjs.init("#"); // Obtener de https://dashboard.emailjs.com/admin/account
-            
-            contactForm.addEventListener('submit', async function(e) {
+            contactForm.addEventListener('submit', function(e) {
                 e.preventDefault();
                 const submitBtn = contactForm.querySelector('button[type="submit"]');
                 const originalBtnContent = submitBtn.innerHTML;
@@ -2050,15 +2069,7 @@
                 submitBtn.disabled = true;
                 submitBtn.innerHTML = `<div class="loading-spinner"></div> Enviando...`;
                 
-                try {
-                    // Envío real con EmailJS
-                    const result = await emailjs.sendForm(
-                        '#',    // Obtener de https://dashboard.emailjs.com/admin
-                        '#',   // Obtener de https://dashboard.emailjs.com/admin
-                        contactForm
-                    );
-                    
-                    console.log('✅ Email enviado:', result);
+                setTimeout(() => {
                     submitBtn.innerHTML = `<i data-lucide="check-circle" class="btn-icon"></i> ¡Mensaje Enviado!`;
                     lucide.createIcons(); 
                     contactForm.reset();
@@ -2068,18 +2079,7 @@
                         submitBtn.disabled = false;
                         lucide.createIcons();
                     }, 4000);
-                    
-                } catch (error) {
-                    console.error('❌ Error al enviar:', error);
-                    submitBtn.innerHTML = `<i data-lucide="x-circle" class="btn-icon"></i> Error. Intenta nuevamente`;
-                    lucide.createIcons();
-                    
-                    setTimeout(() => {
-                        submitBtn.innerHTML = originalBtnContent;
-                        submitBtn.disabled = false;
-                        lucide.createIcons();
-                    }, 3000);
-                }
+                }, 1500);
             });
         }
 
@@ -2117,7 +2117,9 @@
                     </p>
                 `);
             });
-        }        const showPhoneBtn = document.getElementById('show-phone-btn');
+        }
+
+        const showPhoneBtn = document.getElementById('show-phone-btn');
         if (showPhoneBtn) {
             showPhoneBtn.addEventListener('click', () => {
                 const phone = ['+54', '11', '5704', '3076'].join(''); // Sin espacios para copiar fácil
@@ -2135,26 +2137,6 @@
             });
         }
     });
-
-    // Función para mostrar modal de skills (fuera del DOMContentLoaded)
-    function showSkillModal(element) {
-        const skillData = JSON.parse(element.dataset.skill);
-        const modal = document.getElementById('contact-modal');
-        const modalTitle = document.getElementById('modal-title');
-        const modalText = document.getElementById('modal-text');
-        
-        modalTitle.textContent = skillData.name;
-        modalText.innerHTML = `
-            <div style="display: flex; align-items: center; gap: 1rem; margin-bottom: 1rem;">
-                ${element.innerHTML.split('<span class="skill-tooltip">')[0]}
-                <h4 style="margin: 0; color: hsl(var(--primary));">${skillData.name}</h4>
-            </div>
-            <p style="margin-bottom: 1rem;"><strong>Uso en mis proyectos:</strong></p>
-            <p>${skillData.usage || 'Información detallada próximamente...'}</p>
-        `;
-        modal.classList.add('show');
-        lucide.createIcons();
-    }
     </script>
 
 </body>
