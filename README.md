@@ -15,10 +15,6 @@ Este proyecto fue desarrollado utilizando las siguientes tecnologías:
 - **HTML5**: Para la estructura semántica de las páginas.
 - **CSS3**: Para el diseño y estilización responsive.
 - **JavaScript**: Para la interactividad y animaciones.
-- **Django**: Framework backend para aplicaciones robustas.
-- **Python**: Lenguaje principal para desarrollo backend y automatización.
-- **FastAPI**: Para la creación de APIs de alto rendimiento.
-- **PostgreSQL**: Base de datos relacional robusta.
 
 ---
 
