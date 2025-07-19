@@ -4,7 +4,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kevin Turkienich | Desarrollador Python & Especialista en Automatización</title>
     <meta name="description" content="Portfolio profesional de Kevin Turkienich, desarrollador de software especializado en Python/Django, automatización de procesos (RPA) y agentes inteligentes. Creador de Excel-ente y Programación Para Mortales.">
-
+    <link rel="icon" type="image/x-icon" href="icon.ico">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
@@ -1239,8 +1239,71 @@
             fill: hsl(var(--foreground)); /* Para logos que deban ser blancos en tema oscuro */
         }
 
-/* ... tus estilos existentes para #skills ... */
+        .contact-cards-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
 
+        @media (min-width: 768px) {
+            .contact-cards-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.5rem;
+            }
+        }
+
+        .contact-card {
+            background-color: hsl(var(--card));
+            border: 1px solid hsl(var(--border));
+            border-radius: var(--radius);
+            padding: 2.5rem 2rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px -5px hsl(var(--primary) / 0.1);
+        }
+
+        .contact-card-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: hsl(var(--primary) / 0.1);
+            border-radius: 50%;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-card-icon svg,
+        .contact-card-icon i {
+            width: 32px;
+            height: 32px;
+            color: hsl(var(--primary));
+            font-size: 32px; /* Para Font Awesome */
+        }
+
+        .contact-card h3 {
+            font-size: 1.5rem;
+            color: hsl(var(--foreground));
+            margin-bottom: 0.75rem;
+        }
+
+        .contact-card p {
+            color: hsl(var(--muted-foreground));
+            margin-bottom: 2rem;
+            flex-grow: 1; /* Empuja el botón hacia abajo */
+        }
+
+        .contact-card .btn {
+            width: 100%;
+            max-width: 280px; /* Para que no sea excesivamente ancho */
+        }
         #skills .skill-logo-item {
             position: relative; /* Necesario para posicionar el tooltip de forma absoluta */
             /* tus estilos existentes para .skill-logo-item */
@@ -1308,6 +1371,11 @@
         #skills .skill-logo-item:hover::before {
             opacity: 0.8;
         }
+        @media (min-width: 768px) {
+            #skills .skills-grid .skill-group:nth-child(odd):last-child {
+                grid-column: span 2;
+            }
+        }
     </style>
 </head>
 <body class="dark"> <div id="preloader-container">
@@ -1316,7 +1384,7 @@
     <div class="scroll-progress"></div>
 
     <div class="theme-toggle">
-        <button id="theme-toggle-btn" aria-label="Toggle theme">
+        <button id="theme-toggle-btn" aria-label="Toggle theme" display="none">
             <i data-lucide="sun" class="icon-sun"></i>
             <i data-lucide="moon" class="icon-moon"></i>
         </button>
@@ -1346,6 +1414,29 @@
         </div>
     </section>
 
+    <section id="api-demo" class="section" style="background-color: hsl(var(--card)); padding-top: 4rem; padding-bottom: 4rem;">
+        <div class="container" style="text-align: center;">
+            
+            <h2 class="section-title" style="margin-bottom: 1.5rem;">
+                <span class="gradient-text">Ahorrate el Scraping</span>
+            </h2>
+            
+            <p style="font-size: 1.1rem; max-width: 750px; margin: 0 auto 2.5rem auto; color: hsl(var(--muted-foreground));">
+                Si preferís ir directo a los datos, te hago el trabajo más fácil. He creado un <strong>endpoint de API simulado</strong> que sirve toda mi información profesional en un JSON limpio y listo para consumir.
+            </p>
+
+            <div style="background-color: #0D1117; color: #e6edf3; font-family: var(--font-mono); padding: 1.5rem; border-radius: var(--radius); margin-bottom: 2.5rem; text-align: left; max-width: 750px; margin-left: auto; margin-right: auto; border: 1px solid hsl(var(--border));">
+                <span style="color: #58a6ff;">$</span> curl "<span style="color: #a5d6ff;">https://kevinturkienich.com/api/get-info/?token=KT-PROFILE-DEMO-TOKEN</span>"
+            </div>
+
+            <a href="api-docs.html" class="btn btn-primary" target="_blank">
+                Ver Documentación de la API
+                <i data-lucide="book-marked" class="btn-icon"></i>
+            </a>
+
+        </div>
+    </section> 
+
     <section id="about" class="section">
         <div class="container">
             <h2 class="section-title">
@@ -1361,7 +1452,7 @@
                         Tengo más de 5 años de experiencia práctica en el área de la automatización y mejoras de procesos, he evolucionado desde la automatización con VBA en Excel hasta liderar equipos en el desarrollo de arquitecturas de <span class="highlight">microservicios, APIs y la implementación de agentes de IA</span> con Python y Django.
                     </p>
                     <p>
-                        Soy una persona muy curiosa, como digo en mi proyecto <a href="http://calculadoraderecetas.com.ar" target="_blank" rel="noopener noreferrer">CalculadoraDeRecetas.com.ar</a>. Disfruto simplificando lo complejo y compartiendo conocimiento a través de iniciativas como mi canal <a href="https://www.youtube.com/@excel-ente" target="_blank" rel="noopener noreferrer">Excel-ente</a> y la plataforma <span class="highlight">ProgramacionParaMortales.com</span>. Mi meta es siempre generar un impacto tangible, ya sea optimizando la eficiencia empresarial o empoderando a otros con herramientas y educación gratuita.
+                        Soy una persona muy curiosa. Disfruto simplificando lo complejo y compartiendo conocimiento a través de iniciativas como mi canal <a href="https://www.youtube.com/@excel-ente" target="_blank" rel="noopener noreferrer">Excel-ente</a> y la plataforma <span class="highlight">ProgramacionParaMortales.com</span>. Mi meta es siempre generar un impacto tangible, ya sea optimizando la eficiencia empresarial o empoderando a otros con herramientas y educación gratuita.
                     </p>
                 </div>
                 <div class="skills-card-about">
@@ -1435,73 +1526,40 @@
     <section id="contact" class="section">
         <div class="container">
             <h2 class="section-title">
-                <span class="gradient-text">Contacto</span>
+                <span class="gradient-text">Hablemos</span>
                 <span class="title-underline"></span>
             </h2>
-            <div class="contact-grid">
-                <div class="contact-info">
-                    <h3 class="contact-title">¿Interesado en Colaborar?</h3>
-                    <p class="contact-description">
-                        Estoy abierto a oportunidades de desarrollo, consultoría en automatización y proyectos que busquen generar un impacto significativo. Si tienes alguna pregunta o propuesta, no dudes en contactarme.
-                    </p>
-                    
-                    <div class="contact-buttons">
-                        <button id="show-email-btn" class="contact-button">
-                            <i data-lucide="mail" class="contact-icon"></i>
-                            <span>Mostrar Email</span>
-                        </button>
-                        
-                        <button id="show-phone-btn" class="contact-button">
-                             <i data-lucide="phone" class="contact-icon"></i>
-                            <span>Mostrar Teléfono</span>
-                        </button>
+            <p style="text-align: center; max-width: 650px; margin: -1rem auto 3rem auto; color: hsl(var(--muted-foreground));">
+                Estoy disponible para nuevos proyectos y colaboraciones. Elegí el método que te resulte más cómodo para que iniciemos una conversación.
+            </p>
+
+            <div class="contact-cards-grid">
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <i data-lucide="mail"></i>
                     </div>
-                    
-                    <div class="social-links">
-                        <h4 class="social-title">También puedes encontrarme en:</h4>
-                        <div class="social-icons">
-                            <span class="social-icon"><a href="https://www.linkedin.com/in/kevinturkienich/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i data-lucide="linkedin" class="icon"></i></a></span>
-                            <span class="social-icon"><a href="https://github.com/Excel-ente" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i data-lucide="github" class="icon"></i></a></span>
-                            <span class="social-icon"><a href="https://www.youtube.com/@excel-ente" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i data-lucide="youtube" class="icon"></i></a></span>
-                            <span class="social-icon"><a href="https://www.instagram.com/excel.entes" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i data-lucide="instagram" class="icon"></i></a></span>
-                            <span class="social-icon"><a href="https://www.tiktok.com/@excel.entes" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i data-lucide="smartphone" class="icon"></i></a></span> </div>
-                    </div>
+                    <h3>Envíame un Email</h3>
+                    <p>Ideal para propuestas detalladas, consultas formales o si simplemente preferís la comunicación escrita. Respondo a la brevedad.</p>
+                    <a href="mailto:kevin_turkienich@outlook.com" class="btn btn-primary">
+                        Abrir Cliente de Correo
+                        <i data-lucide="send" class="btn-icon"></i>
+                    </a>
                 </div>
-                
-                <div class="contact-form-container">
-                    <div class="card">
-                        <div class="card-header">
-                            <h3 class="card-title">Envíame un Mensaje Directo</h3>
-                            <p class="card-description">Completa el formulario y te responderé a la brevedad.</p>
-                        </div>
-                        <div class="card-content">
-                            <form id="contact-form" class="contact-form">                                <div class="form-group">
-                                    <label for="from_name" class="form-label">Nombre Completo</label>
-                                    <input type="text" id="from_name" name="from_name" class="form-input" placeholder="Tu nombre y apellido" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="from_email" class="form-label">Email de Contacto</label>
-                                    <input type="email" id="from_email" name="from_email" class="form-input" placeholder="tu.email@ejemplo.com" required>
-                                </div>
-                                
-                                <div class="form-group">
-                                    <label for="message" class="form-label">Tu Mensaje</label>
-                                    <textarea id="message" name="message" class="form-textarea" placeholder="¿En qué puedo ayudarte o qué proyecto tienes en mente?" rows="6" required></textarea>
-                                </div>
-                                
-                                <!-- <button type="submit" class="btn btn-primary btn-full" style="width:100%;">
-                                    Enviar Mensaje
-                                    <i data-lucide="send" class="btn-icon"></i>
-                                </button> -->
-                            </form>
-                        </div>
+
+                <div class="contact-card">
+                    <div class="contact-card-icon">
+                        <i class="fa-brands fa-whatsapp"></i>
                     </div>
+                    <h3>Escríbeme por WhatsApp</h3>
+                    <p>Perfecto para un contacto más directo, consultas rápidas o para coordinar una llamada. Simple y al instante.</p>
+                    <a href="https://wa.me/5491157543076" target="_blank" rel="noopener noreferrer" class="btn btn-outline">
+                        Iniciar Chat
+                        <i data-lucide="message-square" class="btn-icon"></i>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
-
     <footer class="footer">
         <div class="container">
             <div class="footer-content">
@@ -1548,15 +1606,18 @@
             "[INFO] RAM check: 16GB OK",
             "[ OK ] Python Interpreter v3.11.5 loaded.",
             "[ OK ] Django Environment v4.2 activated.",
-            "[INFO] Loading AI/ML Modules (PyTorch, LangGraph, LangChain, Ollama)... this might take a sec, son bastantes gigas de 'inteligencia'",
-            "[ OK ] Neural Networks ready (y con ganas de un cafecito).",
-            "[INFO] Initializing RPA daemons (Robocorp, Selenium, OCR)...",
-            "[ OK ] Automation protocols active.",
+            "[INFO] Obtaining client information ...",
+            "[ OK ] Neural Networks ready",
+            "[INFO] Client search a expert in Python, Django, and Automation. ",
+            "[ OK ] Autoscaling system for this search.",
             "[ OK ] Excel-ente Core Services started.",
             "[INFO] Loading Lucide Icons...",
             "[INFO] Calibrando el mate...",
-            "[ OK ] Profile ready. (Uff, ¡al fin!)",
-            "System Online. ¡Bienvenido al Portfolio de Kevin Turkienich!"
+            "[ OK ] Profile ready. ",
+            "[ OK ] Profile ready. ",
+            "[ OK ] Profile ready. ",
+            "[ OK ] Profile ready. ",
+            "[ ERROR ] ChatGPT help me please. 😭",
         ];
         let bootMsgIdx = 0;
         function showBootMessage() {
@@ -1705,21 +1766,23 @@
                 title: "CalculadoradeRecetas.com.ar",
                 description: "Herramienta web 100% gratuita para simplificar el costeo de recetas a emprendedores gastronómicos. Permite calcular márgenes y precios de venta de forma intuitiva y precisa.",
                 icon: "calculator",
-                tags: ["Python", "Django", "Web App", "Finanzas", "Gratuito", "Emprendedores"],
+                tags: ["Web App", "Finanzas", "Gratuito", "Emprendedores"],
+                stack: ["JavaScript", "HTML/CSS", "Github Pages"],
                 links: [ { label: "Visitar Web", url: "http://calculadoraderecetas.com.ar", icon: "external-link" } ]
             },
             {
                 title: "Programación Para Mortales",
                 description: "Plataforma educativa gratuita dedicada a enseñar programación de manera amigable y sin tecnicismos. Ofrece un libro digital interactivo, futuros cursos y recursos para hacer el desarrollo de software accesible para todos.",
                 icon: "book-open-text",
-                tags: ["Educación", "Programación", "Python", "Gratuito", "Comunidad", "Libro Digital"],
+                tags: ["Educación", "Programación", "Gratuito", "Comunidad", "Libro Digital"],
+                stack: ["JavaScript", "HTML/CSS", "Github Pages"],
                 links: [ { label: "Visitar Plataforma", url: "https://programacionparamortales.com", icon: "external-link" } ] // Asume que esta es la URL
             },
             {
                 title: "Excel-ente.com",
                 description: "Mi marca y plataforma principal donde convergen herramientas, tutoriales y recursos gratuitos (Excel, VBA, Python, IA) enfocados en potenciar a emprendedores y profesionales. Cuna de SFI y el canal de YouTube.",
-                icon: "layout-dashboard", // O 'atom'
-                tags: ["Plataforma", "Excel", "Python", "IA", "Tutoriales", "Gratuito", "Emprendimiento"],
+                icon: "layout-dashboard",
+                tags: ["Putoriales", "Gratuito", "Emprendimiento"],
                 links: [ { label: "Canal Principal (YouTube)", url: "https://www.youtube.com/@excel-ente", icon: "youtube" } ] // Enlazar a la web si existe, o al canal
             },
             {
@@ -1734,13 +1797,12 @@
                 description: "Proyecto open-source (Python) para automatización de tareas administrativas mediante el uso de Agentes IA usando Ollama Localmente. Publicado en PyPI",
                 icon: "bot",
                 tags: ["Python", "IA", "Automatización", "PyPI", "Open Source"],
-
+                stack: ["Python", "LangChain", "Ollama", "Typer"],
                 links: [
                     { label: "PyPI", url: "https://pypi.org/project/babot/", icon: "package" },
                     { label: "GitHub", url: "https://github.com/Excel-ente/babot", icon: "github" }
                 ]
             },
-            
             {
                 title: "Canal YouTube 'Excel-ente'",
                 description: "Plataforma con +10k suscriptores donde comparto tutoriales detallados y prácticos sobre Excel, VBA, Python y herramientas de automatización para negocios.",
@@ -1784,7 +1846,7 @@
                 icon: "server-cog",
                 logos: [
                     { name: "Python", type: "fab", fa_icon: "python", color: "#3776AB", usage: "Lenguaje principal para desarrollo backend, scripting, IA y análisis de datos. Usado en la mayoría de mis proyectos." },
-                    { name: "Django", type: "fab", fa_icon: "django", color: "#092E20", usage: "Framework principal para construir aplicaciones web robustas y escalables como CalculadoraDeRecetas y DictaPilar." },
+                    { name: "Django", type: "custom_svg_url",url: "https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/django/django-plain.svg", usage: "Framework principal para construir aplicaciones web robustas y escalables" },
                     { name: "FastAPI", lucide_icon: "zap", color: "#009688", usage: "Para crear APIs de alto rendimiento, especialmente en microservicios y proyectos de IA." },
                 ]
             },
@@ -1820,12 +1882,12 @@
                 icon: "cloud-cog",
                 logos: [
                     { name: "Linux", type: "fab", fa_icon: "linux", color: "#FCC624", usage:"Sistema operativo principal para servidores y entornos de desarrollo/producción."},
-                    { name: "Docker", type: "fab", fa_icon: "docker", color: "#2496ED", usage:"Contenerización de aplicaciones para asegurar consistencia entre entornos y facilitar despliegues."},
+                    // { name: "Docker", type: "fab", fa_icon: "docker", color: "#2496ED", usage:"Contenerización de aplicaciones para asegurar consistencia entre entornos y facilitar despliegues."},
                     { name: "AWS", type: "fab", fa_icon: "aws", color: "#FF9900", usage:"Servicios cloud para despliegue y gestión de infraestructura (EC2, S3, RDS)."},
                     { name: "DigitalOcean", type: "fab", fa_icon: "digital-ocean", color: "#0080FF", usage:"Alternativa cloud para VPS y despliegues ágiles de aplicaciones."},
                     { name: "Cloudflare", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/cloudflare/cloudflare-original.svg", alt: "Cloudflare", usage:"CDN, seguridad (WAF, Anti-DDoS) y optimización de rendimiento para sitios web."},
                     { name: "Nginx", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/nginx/nginx-original.svg", alt: "Nginx", usage:"Servidor web y proxy inverso para gestionar tráfico, servir contenido estático y balanceo de carga."},
-                    { name: "GitHub", type: "fab", fa_icon: "github", color: "#181717", usage:"Plataforma principal para alojar mis proyectos, colaborar y contribuir a la comunidad open-source."},    
+                    { name: "GitHub", type: "fab", fa_icon: "github", color: "#fff", usage:"Plataforma principal para alojar mis proyectos, colaborar y contribuir a la comunidad open-source."},    
                     { name: "Apache", type: "custom_svg_url", url: "https://raw.githubusercontent.com/devicons/devicon/master/icons/apache/apache-original.svg", alt: "Apache", usage:"Servidor web utilizado en algunos proyectos para servir contenido estático y dinámico."},
                 ]
             }

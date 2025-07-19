@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="application/json; charset=utf-8">
+    <title>API Response</title>
+  <link rel="icon" type="image/x-icon" href="icon.ico">
+</head>
+<body style="margin: 0; background-color: #1e1e1e;">
+    <pre
+    style="white-space: pre-wrap;word-wrap: break-word;color: #d4d4d4; font-family: 'Consolas';font-size: 14px;line-height: 1.5; padding: 15px"
+    id="json-output"
+    ></pre>
+    <script>
+        (function() {
+      
+            const FAKE_API_TOKEN = "KT-PROFILE-DEMO-TOKEN";
+
+            const successResponse = {
+              "status": "success",
+              "code": 200,
+              "source": "Simulated JavaScript API",
+              "timestamp": new Date().toISOString(),
+              "data": {
+                "personal_info": {
+                  "nombre_completo": "Kevin Turkienich",
+                  "ubicacion": {
+                    "ciudad": "Buenos Aires",
+                    "pais": "Argentina"
+                  }
+                },
+                "professional_profile": {
+                  "titular": "Desarrollador Python & Especialista en Automatización",
+                  "resumen": "Desarrollador de Software y Especialista en Automatización de Procesos con más de 5 años de experiencia tendiendo puentes entre las necesidades del negocio y soluciones tecnológicas. Evolucioné desde la automatización en Excel con VBA hasta liderar equipos en el desarrollo de arquitecturas de microservicios, APIs y la implementación de agentes de IA con Python y Django.",
+                  "roles": [
+                    "Desarrollador Python",
+                    "Especialista en Automatización",
+                    "Educador Tecnológico"
+                  ],
+                  "mision": "Resolver problemas y generar impacto con tecnología accesible.",
+                  "estado_actual": "Online y listo para nuevos desafíos."
+                },
+                "contacto": {
+                  "email": "kevin_turkienich@outlook.com",
+                  "whatsapp": "https://wa.me/5491157543076",
+                  "redes_sociales": {
+                    "linkedin": "https://www.linkedin.com/in/kevinturkienich/",
+                    "github": "https://github.com/Excel-ente",
+                    "youtube": "https://www.youtube.com/@excel-ente",
+                    "instagram": "https://www.instagram.com/excel.entes",
+                    "tiktok": "https://www.tiktok.com/@excel.entes"
+                  }
+                },
+                "skills": {
+                  "competencias_principales": [
+                    "Desarrollo Full-Stack (Python, Django)",
+                    "Automatización de Procesos (RPA, VBA)",
+                    "Inteligencia Artificial y Agentes Autónomos",
+                    "Arquitectura de Microservicios y APIs",
+                    "Liderazgo de Equipos Técnicos",
+                    "Creación de Contenido Educativo",
+                    "Análisis y Optimización de Procesos de Negocio"
+                  ],
+                  "stack_tecnologico": [
+                    {
+                      "categoria": "Lenguajes & Frameworks Backend",
+                      "herramientas": ["Python", "Django", "FastAPI"]
+                    },
+                    {
+                      "categoria": "Inteligencia Artificial & Agentes",
+                      "herramientas": ["LangChain", "Ollama"]
+                    },
+                    {
+                      "categoria": "Automatización (RPA & Scripting)",
+                      "herramientas": ["Selenium", "VBA", "Bash"]
+                    },
+                    {
+                      "categoria": "Bases de Datos & Frontend Básico",
+                      "herramientas": ["PostgreSQL", "HTML5", "CSS3"]
+                    },
+                    {
+                      "categoria": "DevOps & Cloud",
+                      "herramientas": ["Linux", "Docker", "AWS", "DigitalOcean", "Cloudflare", "Nginx", "GitHub", "Apache"]
+                    }
+                  ]
+                },
+                "proyectos": [
+                  {
+                    "titulo": "CalculadoradeRecetas.com.ar",
+                    "descripcion": "Aplicación web que ayuda a +500 emprendedores gastronómicos a costear recetas y calcular precios de venta. Desarrollada para ser intuitiva y 100% gratuita.",
+                    "tags": ["Python", "Django", "Web App", "Finanzas", "Gratuito"],
+                    "stack": ["Django", "PostgreSQL", "JavaScript", "HTML/CSS", "Nginx"],
+                    "links": [{ "label": "Visitar Web", "url": "http://calculadoraderecetas.com.ar" }]
+                  },
+                  {
+                    "titulo": "Programación Para Mortales",
+                    "descripcion": "Plataforma educativa con un libro digital interactivo para enseñar a programar desde cero, de forma amigable y sin tecnicismos.",
+                    "tags": ["Educación", "Python", "Gratuito", "Comunidad"],
+                    "stack": ["Django", "JavaScript", "SQLite", "HTML/CSS"],
+                    "links": [{ "label": "Visitar Plataforma", "url": "https://programacionparamortales.com" }]
+                  },
+                  {
+                    "titulo": "Babot - Agente IA (PyPI)",
+                    "descripcion": "Librería open-source en Python para automatizar tareas administrativas usando Agentes de IA con LLMs locales (Ollama), garantizando la privacidad.",
+                    "tags": ["Python", "IA", "Automatización", "PyPI", "Open Source"],
+                    "stack": ["Python", "LangChain", "Ollama", "Typer"],
+                    "links": [
+                        { "label": "PyPI", "url": "https://pypi.org/project/babot/" },
+                        { "label": "GitHub", "url": "https://github.com/Excel-ente/babot" }
+                    ]
+                  }
+                ],
+                "experiencia_profesional": [
+                  {
+                    "rol": "Coordinador de Automatización de Procesos y Mejora Continua",
+                    "empresa": "Municipalidad de Pilar",
+                    "periodo": "Jul 2023 - Presente",
+                    "tags": ["Liderazgo", "Python", "Django", "FastAPI", "RPA", "IA", "Microservicios"]
+                  },
+                  {
+                    "rol": "Analista Técnico SSR (RPA y BI)",
+                    "empresa": "Swiss Medical Group",
+                    "periodo": "Jul 2022 - Jun 2023",
+                    "tags": ["RPA", "UiPath", "Power Automate", "Power BI", "Automatización"]
+                  },
+                  {
+                    "rol": "Consultor Semi-Senior en Tax Technology (Analista Funcional RPA)",
+                    "empresa": "KPMG Argentina",
+                    "periodo": "Nov 2021 - Jul 2022",
+                    "tags": ["RPA", "Análisis Funcional", "Consultoría", "VBA"]
+                  }
+                ]
+              }
+            };
+
+            const errorResponse = {
+                status: "error",
+                code: 403,
+                message: "Forbidden. El token proporcionado es inválido o no fue provisto. Agrega '?token=TU_TOKEN' a la URL."
+            };
+
+            const placeholderTokenErrorResponse = {
+                status: "error",
+                code: 403, 
+                message: "No, osea, tenés que poner el token correcto de acceso, no copiar y pegar 'TU_TOKEN' 😒"
+            };
+
+            const urlParams = new URLSearchParams(window.location.search);
+            const providedToken = urlParams.get('token');
+            let finalResponse;
+
+            if (providedToken === FAKE_API_TOKEN) {
+                finalResponse = successResponse;
+            } else if (providedToken === "TU_TOKEN") {
+                finalResponse = placeholderTokenErrorResponse;
+            } else {
+                finalResponse = errorResponse;
+            }
+
+            const jsonString = JSON.stringify(finalResponse, null, 2);
+            document.getElementById('json-output').textContent = jsonString;
+        })();
+    </script>
+</body>
+</html>

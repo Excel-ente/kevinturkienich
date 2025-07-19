@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tutorial: API Simulada - Kevin Turkienich</title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <style>
+        :root {
+            --background: 20 14.3% 4.1%; --foreground: 0 0% 95%; --card: 24 9.8% 10%;
+            --primary: 142.1 70.6% 45.3%; --primary-foreground: 144.9 80.4% 10%;
+            --muted-foreground: 240 5% 64.9%; --border: 240 3.7% 15.9%;
+            --radius: 0.5rem; --font-sans: "Inter", sans-serif; --font-mono: "Fira Code", monospace;
+        }
+        body { font-family: var(--font-sans); background-color: hsl(var(--background)); color: hsl(var(--foreground)); line-height: 1.7; }
+        .container { max-width: 900px; margin: 0 auto; padding: 3rem 1.5rem; }
+        h1, h2, h3 { font-weight: 700; color: hsl(var(--primary)); }
+        h1 { font-size: 2.5rem; border-bottom: 1px solid hsl(var(--border)); padding-bottom: 1rem; margin-bottom: 2rem; }
+        h2 { font-size: 1.75rem; margin-top: 3rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.25rem; margin-top: 2rem; margin-bottom: 0.5rem; color: hsl(var(--foreground));}
+        p { color: hsl(var(--muted-foreground)); margin-bottom: 1rem; }
+        code { background-color: hsl(var(--card)); border: 1px solid hsl(var(--border)); padding: 0.2em 0.4em; border-radius: 0.3rem; font-family: var(--font-mono); font-size: 0.9em; color: hsl(var(--primary)); }
+        pre { background-color: #0D1117; color: #e6edf3; font-family: var(--font-mono); padding: 1.5rem; border-radius: var(--radius); text-align: left; border: 1px solid hsl(var(--border)); white-space: pre-wrap; word-break: break-all; margin-top: 1rem; }
+        .btn { display: inline-flex; align-items: center; justify-content: center; border-radius: var(--radius); font-weight: 500; padding: 0.75rem 1.5rem; transition: all 0.2s ease; text-decoration: none; background-color: hsl(var(--primary)); color: hsl(var(--primary-foreground)); }
+        .btn-icon { margin-left: 0.5rem; }
+        a { color: hsl(var(--primary)); text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .note-box { background-color: hsl(var(--card)); border-left: 4px solid hsl(var(--primary)); padding: 1.5rem; margin-top: 1rem; border-radius: 0 var(--radius) var(--radius) 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1><i data-lucide="wrench" style="vertical-align: -4px; margin-right: 1rem;"></i>Cómo Armé la API Falsa de mi Portfolio</h1>
+        <p>¡Buenas! Acá te cuento el paso a paso de cómo monté el endpoint <code>/api/get-info/</code>. La idea era simular una API para mostrar cómo pienso la lógica de un backend, pero sin tener un backend de verdad, todo con archivos estáticos. Puro JavaScript.</p>
+        
+        <hr style="border-color: hsl(var(--border)); margin: 3rem 0;">
+
+        <h2>Paso 1: La Estructura de Carpetas</h2>
+        <p>Seguro ya sabés, porque lo explican en la mayoría de los tutoriales (yo acá no voy a enseñar nada nuevo), que cuando entrás a un dominio, por defecto el servidor te devuelve el archivo <code>index.html</code>.</p>
+        <p>Bueno, la lógica es la misma para las subcarpetas. Si queremos que se muestre algo en la ruta <code>/api/get-info/</code>, es tan simple como crear esas carpetas en nuestro proyecto. Así, cuando alguien entre a esa URL, el servidor va a buscar y devolver el <code>index.html</code> que esté ahí adentro. ¡Una pavada!</p>
+        <pre><code>
+mi-proyecto/
+└── api/
+    └── get-info/
+        └── index.html  &lt;-- Este es el que se muestra.
+        </code></pre>
+
+        <hr style="border-color: hsl(var(--border)); margin: 3rem 0;">
+
+        <h2>Paso 2: El HTML Minimalista (Pensando en la Terminal)</h2>
+        <p>Al principio tenía el CSS en una etiqueta <code>&lt;style&gt;</code>, pero cuando lo probé con <code>curl</code>, me di cuenta de que agregaba mucho "ruido" a la terminal. Yo quería que la salida fuera lo más limpia y directa posible.</p>
+        <p>La solución fue inyectar los estilos directamente en cada etiqueta usando el atributo <code>style="..."</code>. De esta forma, el HTML que se devuelve es mínimo y va directo al grano, que es mostrar la etiqueta <code>&lt;pre&gt;</code> y el script que hace la magia.</p>
+        
+        <pre><code>
+&lt;!DOCTYPE html&gt;
+&lt;html lang="es"&gt;
+&lt;head&gt;
+    &lt;!-- Metadatos esenciales, nada de más --&gt;
+&lt;/head&gt;
+&lt;!-- Estilos inyectados directamente para minimizar el código --&gt;
+&lt;body style="margin: 0; background-color: #1e1e1e;"&gt;
+    &lt;!-- El contenedor para el JSON, también con estilos en línea --&gt;
+    &lt;pre id="json-output" style="..."&gt;&lt;/pre&gt;
+    
+    &lt;!-- Y por último, el script que hace todo --&gt;
+    &lt;script&gt;
+        (function() {
+            /* ... la lógica de la API ... */
+        })();
+    &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+        </code></pre>
+        
+        <hr style="border-color: hsl(var(--border)); margin: 3rem 0;">
+
+        <h2>Paso 3: La Lógica JavaScript (La Magia)</h2>
+        <p>Acá está el truco. Todo el laburo lo hace este pedacito de JavaScript que se ejecuta apenas se carga la página. Lo metí dentro de una función que se autoejecuta, <code>(function(){ ... })();</code>, para que no ande ensuciando el entorno global.</p>
+        
+        <pre><code>
+(function() {
+    // ---- 1. Definimos todo en el código ----
+    // Este es nuestro token "secreto". Cualquiera que quiera usar la API
+    // va a tener que pasar este mismo texto en la URL.
+    const FAKE_API_TOKEN = "KT-PROFILE-DEMO-TOKEN";
+
+    // Preparamos los dos posibles resultados como objetos de JavaScript.
+    // Uno para cuando todo sale bien...
+    const successResponse = {
+      status: "success",
+      source: "Simulated JavaScript API",
+      timestamp: new Date().toISOString(), // Le ponemos la fecha y hora actual para que parezca más real.
+      data: { /* ... toda mi info profesional ... */ }
+    };
+
+    // ...y otro para cuando el token está mal.
+    const errorResponse = {
+        status: "error",
+        code: 403,
+        message: "Forbidden. El token proporcionado es inválido o no fue provisto. Agrega '?token=TU_TOKEN' a la URL."
+    };
+
+    // ---- 2. Chusmeamos la URL ----
+    // Creamos un objeto que nos ayuda a leer los parámetros de la URL actual.
+    const urlParams = new URLSearchParams(window.location.search);
+    // Buscamos si hay un parámetro que se llame "token" y guardamos su valor.
+    const providedToken = urlParams.get('token');
+    
+    // ---- 3. Comparamos y decidimos ----
+    // Declaramos una variable para guardar la respuesta final.
+    let finalResponse;
+
+    // Si el token que nos pasaron es igual al nuestro...
+    if (providedToken === FAKE_API_TOKEN) {
+        // ...la respuesta final va a ser la de éxito.
+        finalResponse = successResponse;
+    } else {
+        // Si no, la respuesta va a ser la de error. Simple.
+        finalResponse = errorResponse;
+    }
+
+    // ---- 4. Lo mostramos en pantalla ----
+    // Convertimos el objeto de JavaScript (success o error) a un texto en formato JSON.
+    // El "null, 2" es para que lo indente lindo y no quede todo en una sola línea.
+    const jsonString = JSON.stringify(finalResponse, null, 2);
+    
+    // Agarramos la etiqueta &lt;pre&gt; que tiene el id "json-output" y le metemos
+    // adentro el texto JSON que acabamos de crear.
+    document.getElementById('json-output').textContent = jsonString;
+
+})();
+        </code></pre>
+
+        <hr style="border-color: hsl(var(--border)); margin: 3rem 0;">
+        
+        <h2>Notas Importantes (Ojo al Piojo)</h2>
+
+        <div class="note-box">
+            <h3>1. El truco con `curl` y la Terminal</h3>
+            <p>Si probás esto desde la terminal con <code>curl</code>, vas a ver todo el código HTML, no solo el JSON. Esto es porque <code>curl</code> te muestra el archivo crudo que le manda el servidor. La "magia" de mostrar solo el JSON la hace el navegador cuando ejecuta el JavaScript. ¡Es la prueba de que todo esto corre del lado del cliente!</p>
+        </div>
+
+        <div class="note-box">
+            <h3>2. ¡Esto NO es seguro!</h3>
+            <p>Todo el código, incluyendo el token "secreto", está a la vista de cualquiera que abra la consola del navegador. Esto es un juego, una demostración para divertirse y mostrar cómo funciona la lógica de una API. <strong>Nunca de los nunca uses esto para información sensible.</strong></p>
+            <p>La posta para hacer APIs seguras y de verdad es con un backend. Para eso, si querés, podés aprender Django (en <a href="https://programacionparamortales.com" target="_blank">Programación Para Mortales</a> 😉 jaja).</p>
+        </div>
+
+        <div style="text-align: center; margin-top: 4rem; padding-top: 2rem; border-top: 1px solid hsl(var(--border));">
+            <a href="/index.html" class="btn">
+                <i data-lucide="arrow-left" class="btn-icon" style="margin-left: 0; margin-right: 0.5rem;"></i>
+                Volver al Portfolio Principal
+            </a>
+        </div>
+    </div>
+
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
